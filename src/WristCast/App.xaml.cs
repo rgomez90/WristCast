@@ -1,4 +1,9 @@
-﻿using WristCast.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +16,7 @@ namespace WristCast
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new WristCast.MainPage();
         }
 
         protected override void OnStart()
@@ -30,3 +35,4 @@ namespace WristCast
         }
     }
 }
+
