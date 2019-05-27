@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using WristCast.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,7 +16,7 @@ namespace WristCast
         {
             InitializeComponent();
 
-            MainPage = new WristCast.MainPage();
+            MainPage = new HomePage();
         }
 
         protected override void OnStart()

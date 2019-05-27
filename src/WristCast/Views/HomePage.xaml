@@ -2,7 +2,7 @@
 <c:CirclePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:c="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
-             x:Class="WristCast.MainPage">
+             x:Class="WristCast.Views.HomePage">
   <c:CirclePage.Content>
     <StackLayout>
       <Label Text="Welcome to Xamarin.Forms!"
