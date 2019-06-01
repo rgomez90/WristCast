@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using ListenNotesSearch.NET.Models;
+using WristCast.Core.Services;
 
 namespace WristCast.Core.Model
 {
@@ -7,16 +9,21 @@ namespace WristCast.Core.Model
     {
         public PodcastEpisode(IEpisode episode)
         {
-            Title=episode.Title;
+            Title = episode.Title;
             Description = episode.Description;
             Image = episode.Image;
-            Audio=episode.Audio;
-            AudioLength=TimeSpan.FromSeconds(episode.AudioLengthSec);
-            PublishDate=episode.PubDateMs;
-            ExplicitContent=episode.ExplicitContent;
+            Audio = episode.Audio;
+            AudioLength = TimeSpan.FromSeconds(episode.AudioLengthSec);
+            PublishDate = episode.PubDateMs;
+            ExplicitContent = episode.ExplicitContent;
+            Id = episode.Id;
         }
 
-        public int PublishDate { get; set; }
+        public bool IsDownloaded { get; set; }
+
+        public string Id { get; set; }
+
+        public DateTime PublishDate { get; set; }
 
         public TimeSpan AudioLength { get; set; }
 
@@ -33,5 +40,9 @@ namespace WristCast.Core.Model
         public string Image { get; set; }
 
         public string Description { get; set; }
+
+        public string DescriptionShort => Description.Length < 35 ? Description : $"{Description.Substring(0, 35)}...";
+
+        public Podcast Podcast { get; internal set; }
     }
 }

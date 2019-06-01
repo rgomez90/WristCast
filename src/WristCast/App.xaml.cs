@@ -1,9 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WristCast.Views;
+using Autofac;
+using Tizen.Network.Connection;
+using Tizen.Security;
+using Tizen.System;
+using Tizen.Wearable.CircularUI.Forms;
+using WristCast.Core;
+using WristCast.Core.IoC;
+using WristCast.Core.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,13 +20,13 @@ namespace WristCast
         public App()
         {
             InitializeComponent();
-
-            MainPage = new HomePage();
+                MainPage = ((CirclePage)IocContainer.Instance.Resolve<IView<HomeViewModel>>());
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            PrivacyPrivilegeManager.RequestPermission("http://tizen.org/privilege/mediastorage");
+            PrivacyPrivilegeManager.RequestPermission("http://tizen.org/privilege/externalstorage");
         }
 
         protected override void OnSleep()

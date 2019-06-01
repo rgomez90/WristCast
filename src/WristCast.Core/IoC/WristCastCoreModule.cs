@@ -1,4 +1,8 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
+using Autofac.Core;
+using WristCast.Core.Services;
+using WristCast.Core.ViewModels;
 
 namespace WristCast.Core.IoC
 {
@@ -6,7 +10,16 @@ namespace WristCast.Core.IoC
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(ThisAssembly).AsImplementedInterfaces();
+            builder.RegisterAssemblyTypes(ThisAssembly)
+                .Except<SearchService>()
+                .Except<FileService>()
+                .Except<DownloadManager>().AsImplementedInterfaces();
+            builder.RegisterType<DownloadManager>().AsSelf().SingleInstance();
+            builder.RegisterType<FileService>().AsImplementedInterfaces().SingleInstance();
+            builder.RegisterType<SearchService>().As<ISearchService>().WithParameter(
+                new ResolvedParameter((info, context) => info.ParameterType == typeof(string),
+                    ((info, context) => "dad39050909646f9a6976c88fec19a01")));//Secrets.ApiKey)));
+            builder.RegisterAssemblyTypes(ThisAssembly).Where(x=>x.IsSubclassOf(typeof(ViewModel))).AsSelf();
         }
     }
 }

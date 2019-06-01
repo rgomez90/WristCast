@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<wristCast:CircleView x:TypeArguments="viewModels:PodcastDetailsViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
+             xmlns:viewModels="clr-namespace:WristCast.Core.ViewModels;assembly=WristCast.Core"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:PodcastDetailsViewModel}"
+             x:Class="WristCast.Views.PodcastDetailsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Podcast.Name}"
+                VerticalOptions="StartAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <forms:CircleListView ItemsSource="{Binding Podcast.Episodes}" ItemTapped="Cell_OnTapped">
+                <forms:CircleListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout
+                                HeightRequest="120"
+                                HorizontalOptions="FillAndExpand"
+                                Orientation="Vertical"
+                                VerticalOptions="FillAndExpand">
+                                    <Label FontSize="7"
+                                       HorizontalOptions="Center"
+                                       HorizontalTextAlignment="Center"
+                                       Text="{Binding Title}" 
+                                       VerticalOptions="Center"
+                                       VerticalTextAlignment="Center" />
+                                    <Label 
+                                    FontSize="5"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding DescriptionShort}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center"/>
+                                </StackLayout>
+                                <forms:Check
+                                    IsToggled="{Binding }"
+                                    DisplayStyle="Default"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </forms:CircleListView.ItemTemplate>
+            </forms:CircleListView>
+        </StackLayout>
+    </ContentPage.Content>
+</wristCast:CircleView>

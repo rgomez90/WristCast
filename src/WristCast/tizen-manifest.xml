@@ -1,15 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://tizen.org/ns/packages" api-version="4" package="org.tizen.example.WristCast" version="1.0.0">
-	<profile name="wearable" />
-	<ui-application appid="org.tizen.example.WristCast"
-					exec="WristCast.dll"
-					type="dotnet"
-					multiple="false"
-					taskmanage="true"
-					nodisplay="false"
-					launch_mode="single">
-  <label>WristCast</label>
-	<icon>WristCast.png</icon>
+<manifest package="org.rgsystems.WristCast" version="1.0.0" api-version="4" xmlns="http://tizen.org/ns/packages">
+    <author>Rafael Gómez </author>
+    <description>A simple podcast manager &amp; player for Tizen wearables.</description>
+    <profile name="wearable" />
+    <ui-application appid="org.rgsystems.WristCast" exec="WristCast.dll" multiple="false" nodisplay="false" taskmanage="true" type="dotnet" launch_mode="single">
+        <label>WristCast</label>
+        <icon>WristCast.png</icon>
         <metadata key="http://tizen.org/metadata/prefer_dotnet_aot" value="true" />
-	</ui-application>
+        <splash-screens />
+    </ui-application>
+    <shortcut-list />
+    <privileges>
+        <privilege>http://tizen.org/privilege/internet</privilege>
+        <privilege>http://tizen.org/privilege/network.get</privilege>
+        <privilege>http://tizen.org/privilege/network.profile</privilege>
+        <privilege>http://tizen.org/privilege/network.set</privilege>
+        <privilege>http://tizen.org/privilege/content.write</privilege>
+        <privilege>http://tizen.org/privilege/mediastorage</privilege>
+        <privilege>http://tizen.org/privilege/volume.set</privilege>
+        <privilege>http://tizen.org/privilege/externalstorage</privilege>
+        <privilege>http://tizen.org/privilege/bluetooth</privilege>
+        <privilege>http://tizen.org/privilege/download</privilege>
+    </privileges>
+    <provides-appdefined-privileges />
 </manifest>

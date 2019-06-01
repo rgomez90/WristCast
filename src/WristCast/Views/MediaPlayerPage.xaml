@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<wristCast:CircleView x:TypeArguments="viewModels:MediaPlayerViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
+             xmlns:viewModels="clr-namespace:WristCast.Core.ViewModels;assembly=WristCast.Core"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+             xmlns:controls="clr-namespace:WristCast.Controls;assembly=WristCast"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:MediaPlayerViewModel}"
+             x:Class="WristCast.Views.MediaPlayerPage">
+    <AbsoluteLayout x:Name="CustomControlView" IsVisible="{Binding PlayControlViewVisible}"
+                        AbsoluteLayout.LayoutBounds="0, 250, 360, 80" AbsoluteLayout.LayoutFlags="None" BackgroundColor="#CC00FFA0">
+        <controls:Background
+                HorizontalOptions="FillAndExpand"
+                Option="Stretch"
+                VerticalOptions="FillAndExpand" />
+
+        <Label Text="{Binding ActualTitle}"/>
+        <Slider Value="{Binding ActualSecond}" Maximum="{Binding ActualSecond}" Minimum="0" DragStartedCommand="{Binding MoveToStarted}" DragCompletedCommand="{Binding MoveToCommand}"></Slider>
+        <Button x:Name="backBtn" ImageSource="{Binding BackButtonImage}" BackgroundColor="White"
+                    Command="{Binding PreviousCommand}"
+                    AbsoluteLayout.LayoutBounds="50, 0, 80, 80" AbsoluteLayout.LayoutFlags="None"/>
+        <Button x:Name="playBtn" BackgroundColor="Yellow"
+                    ImageSource="{Binding PlayButtonImage}"  Command="{Binding PlayOrStopCommand}"
+                    AbsoluteLayout.LayoutBounds="140, 0, 80, 80" AbsoluteLayout.LayoutFlags="None" />
+        <Button x:Name="forwardBtn" Image="{Binding ForwardButtonImage}"
+                    Command="{Binding NextCommand}"
+                    AbsoluteLayout.LayoutBounds="230, 0, 80, 80" AbsoluteLayout.LayoutFlags="None" />
+    </AbsoluteLayout>
+</wristCast:CircleView>

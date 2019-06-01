@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using WristCast.Core.IoC;
@@ -8,25 +10,29 @@ namespace WristCast.Core.ViewModels
 {
     public class XamarinNavigationService : INavigationService
     {
-        private readonly INavigation _navigation;
+        private readonly Lazy<INavigation> _navigation = new Lazy<INavigation>(GetNavigation);
 
-        public XamarinNavigationService(INavigation navigation)
+        private static INavigation GetNavigation()
         {
-            _navigation = navigation;
+            return Application.Current.MainPage.Navigation;
         }
 
-        public Task PushModalAsync<T>(params object[] parameters) where T : ViewModel
+        public Task PushModalAsync<T>() where T : ViewModel
         {
-            using (var con = IocContainer.Instance.BeginLifetimeScope())
-            {
-                var view = con.Resolve<IView<T>>(parameters.Select(x => new TypedParameter(x.GetType(), x)));
-                return _navigation.PushModalAsync((Page)view);
-            }
+            var view=(Page)IocContainer.Instance.Resolve<IView<T>>();
+            return _navigation.Value.PushModalAsync(view);
+        }
+
+        public async Task PushModalAsync<T, TParam>(TParam param) where T : ViewModel<TParam>
+        {
+            var t = IocContainer.Instance.Resolve<IView<T>>();
+            t.ViewModel.Prepare(param);
+            await _navigation.Value.PushModalAsync((Page) t);
         }
 
         public Task PopModalAsync()
         {
-            return _navigation.PopModalAsync();
+            return _navigation.Value.PopModalAsync();
         }
     }
 }

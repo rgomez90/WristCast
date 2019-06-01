@@ -1,13 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<c:CirclePage xmlns="http://xamarin.com/schemas/2014/forms"
+<wristCast:CircleView x:TypeArguments="viewModels:HomeViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:c="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+             xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
+             xmlns:viewModels="clr-namespace:WristCast.Core.ViewModels;assembly=WristCast.Core"
              x:Class="WristCast.Views.HomePage">
-  <c:CirclePage.Content>
-    <StackLayout>
-      <Label Text="Welcome to Xamarin.Forms!"
+    <c:CirclePage.Content>
+    <c:CircleStackLayout>
+      <Label Text="{Binding ApiKey}"
           VerticalOptions="CenterAndExpand"
           HorizontalOptions="CenterAndExpand" />
-    </StackLayout>
+      <Button Text="Search" HorizontalOptions="Center" Command="{Binding Search}"/>
+      <Button Text="test" HorizontalOptions="Center" Clicked="Button_OnClicked"/>
+      <Button Text="My Podcasts" HorizontalOptions="Center" Command="{Binding MyPodcasts}"/>
+    </c:CircleStackLayout>
   </c:CirclePage.Content>
-</c:CirclePage>
+</wristCast:CircleView>

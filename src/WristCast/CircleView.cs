@@ -1,16 +1,23 @@
-﻿using System.Dynamic;
+﻿using Autofac;
 using Tizen.Wearable.CircularUI.Forms;
 using WristCast.Core;
+using WristCast.Core.IoC;
 using WristCast.Core.ViewModels;
 
 namespace WristCast
 {
-    public abstract class CircleView<T> : CirclePage, IView<T> where T:ViewModel 
+    public abstract class CircleView<T> : CirclePage, IView<T> where T : ViewModel
     {
-        public CircleView(T viewModel):base()
+        protected CircleView()
         {
-           ViewModel = viewModel;
-           BindingContext = ViewModel;
+            ViewModel = IocContainer.Instance.Resolve<T>();
+            BindingContext = ViewModel;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await ViewModel.Init();
         }
 
         public T ViewModel { get; }
