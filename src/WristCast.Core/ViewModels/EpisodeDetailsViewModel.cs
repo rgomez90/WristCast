@@ -30,6 +30,7 @@ namespace WristCast.Core.ViewModels
 
         private void PlayAudio()
         {
+            CrossMediaManager.Current.MediaQueue.Clear();
             CrossMediaManager.Current.MediaQueue.Add(new MediaItem(
                 PodcastEpisode.IsDownloaded ? Path.Combine(_storageProvider.MediaFolderPath, PodcastEpisode.Id + ".mp3") : PodcastEpisode.Audio));
             _navigationService.PushModalAsync<MediaPlayerViewModel>();

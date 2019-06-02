@@ -9,21 +9,27 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:EpisodeDetailsViewModel}"
              x:Class="WristCast.Views.EpisodeDetailsPage"
-             RotaryFocusObject="{Binding Source={x:Reference ScrollView}}">
-    <forms:CircleScrollView x:Name="ScrollView">
-        <StackLayout>
-            <Label Text="{Binding PodcastEpisode.Title}"
-                   FontSize="8"
-                HorizontalOptions="CenterAndExpand" />
-            <Label Text="{Binding PodcastEpisode.Description}"
+             RotaryFocusObject="{x:Reference Sv}">
+    <forms:CirclePage.Content>
+        <forms:CircleScrollView x:Name="Sv" Orientation="Vertical">
+            <forms:CircleStackLayout HorizontalOptions="FillAndExpand"
+                         Orientation="Vertical"
+                         VerticalOptions="FillAndExpand">
+                <Label Text="{Binding PodcastEpisode.Title}"
+                   FontSize="6"
+                   HorizontalOptions="CenterAndExpand" />
+                <Label Text="{Binding PodcastEpisode.Description}"
                    FontSize="5"
                    HorizontalOptions="CenterAndExpand" />
-            <forms:Check IsToggled="{Binding IsDownloaded }"
-                             DisplayStyle="Default"
-                             HorizontalOptions="Start"
-                             VerticalOptions="Center" />
-            <Button Text="Download" IsEnabled="{Binding CanDownload}" Command="{Binding DownloadEpisodeCommand}" CommandParameter="{Binding PodcastEpisode}"/>
-            <Button Text="Play" Command="{Binding PlayEpisode}" CommandParameter="{Binding PodcastEpisode}"/>
-        </StackLayout>
-    </forms:CircleScrollView>
+                <StackLayout Orientation="Horizontal">
+                    <forms:Check IsToggled="{Binding IsDownloaded }"
+                                 DisplayStyle="Small"
+                                 HorizontalOptions="Start"
+                                 VerticalOptions="Center" />
+                    <Button Text="Download" IsEnabled="{Binding CanDownload}" Command="{Binding DownloadEpisodeCommand}" CommandParameter="{Binding PodcastEpisode}"/>
+                </StackLayout>
+                <Button Text="Play" Command="{Binding PlayEpisode}" CommandParameter="{Binding PodcastEpisode}"/>
+            </forms:CircleStackLayout>
+        </forms:CircleScrollView>
+    </forms:CirclePage.Content>
 </wristCast:CircleView>

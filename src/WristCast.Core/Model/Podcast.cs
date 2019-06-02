@@ -30,9 +30,10 @@ namespace WristCast.Core.Model
             Publisher = podcast.Publisher;
             Name = podcast.Title;
             Episodes = episodes;
+            Id = podcast.Id;
         }
 
-        public IEnumerable<PodcastEpisode> Episodes { get; }
+        public string Id { get; set; }
 
         public string Publisher { get; set; }
 
@@ -49,6 +50,8 @@ namespace WristCast.Core.Model
         public string Name { get; }
 
         public string RssFeed{ get; }
+
+        public IEnumerable<PodcastEpisode> Episodes { get; }
 
         public bool IsSubscribed { get; set; }
     }
