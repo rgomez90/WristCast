@@ -27,10 +27,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\ListenNotesSearch.NET\src\ListenNotesSearch.NET\ListenNotesSearch.NET.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Tizen.Security.SecureRepository">
-      <HintPath>C:\Users\rafit\.nuget\packages\tizen.net.api4\4.0.1.14152\ref\netstandard2.0\Tizen.Security.SecureRepository.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 
 </Project>
