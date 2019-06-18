@@ -1,5 +1,5 @@
 ﻿using WristCast.Core.Model;
-using WristCast.Core.ViewModels;
+using WristCast.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

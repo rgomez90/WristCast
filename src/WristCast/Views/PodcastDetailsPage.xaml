@@ -2,19 +2,22 @@
 <wristCast:CircleView x:TypeArguments="viewModels:PodcastDetailsViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
-             xmlns:viewModels="clr-namespace:WristCast.Core.ViewModels;assembly=WristCast.Core"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+             xmlns:viewModels="clr-namespace:WristCast.ViewModels"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:PodcastDetailsViewModel}"
-             x:Class="WristCast.Views.PodcastDetailsPage">
+             x:Class="WristCast.Views.PodcastDetailsPage"
+             RotaryFocusObject="{x:Reference ListView}">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Podcast.Name}"
                 VerticalOptions="StartAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-            <forms:CircleListView ItemsSource="{Binding Podcast.Episodes}" ItemTapped="Cell_OnTapped">
+            <forms:Check DisplayStyle="Small" IsToggled="{Binding Podcast.IsSubscribed}"/>
+            <forms:CircleListView x:Name="ListView" ItemsSource="{Binding Podcast.Episodes}"
+                                  ItemTapped="Cell_OnTapped" RefreshCommand="{Binding RefreshCommand}">
                 <forms:CircleListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

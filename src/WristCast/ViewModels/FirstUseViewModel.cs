@@ -1,7 +1,8 @@
 ﻿using System.Windows.Input;
+using WristCast.Core;
 using Xamarin.Forms;
 
-namespace WristCast.Core.ViewModels
+namespace WristCast.ViewModels
 {
     public class FirstUseViewModel : ViewModel
     {

@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
-using Autofac;
-using WristCast.Core.IoC;
-using WristCast.Core.ViewModels;
 
 namespace WristCast.Core.Services
 {

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using ListenNotesSearch.NET.Models;
-using WristCast.Core.Services;
 
 namespace WristCast.Core.Model
 {

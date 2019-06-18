@@ -2,17 +2,17 @@
 <wristCast:CircleView x:TypeArguments="viewModels:EpisodeDetailsViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
-             xmlns:viewModels="clr-namespace:WristCast.Core.ViewModels;assembly=WristCast.Core"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+             xmlns:viewModels="clr-namespace:WristCast.ViewModels"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:EpisodeDetailsViewModel}"
              x:Class="WristCast.Views.EpisodeDetailsPage"
              RotaryFocusObject="{x:Reference Sv}">
     <forms:CirclePage.Content>
-        <forms:CircleScrollView x:Name="Sv" Orientation="Vertical">
-            <forms:CircleStackLayout HorizontalOptions="FillAndExpand"
+        <forms:CircleScrollView x:Name="Sv">
+            <StackLayout HorizontalOptions="FillAndExpand"
                          Orientation="Vertical"
                          VerticalOptions="FillAndExpand">
                 <Label Text="{Binding PodcastEpisode.Title}"
@@ -26,10 +26,12 @@
                                  DisplayStyle="Small"
                                  HorizontalOptions="Start"
                                  VerticalOptions="Center" />
-                    <Button Text="Download" IsEnabled="{Binding CanDownload}" Command="{Binding DownloadEpisodeCommand}" CommandParameter="{Binding PodcastEpisode}"/>
+                    <Button Text="Download" IsVisible="{Binding CanDownload}" BackgroundColor="Transparent" BorderColor="GreenYellow" BorderWidth="3"
+                            Command="{Binding DownloadEpisodeCommand}" CommandParameter="{Binding PodcastEpisode}"/>
                 </StackLayout>
-                <Button Text="Play" Command="{Binding PlayEpisode}" CommandParameter="{Binding PodcastEpisode}"/>
-            </forms:CircleStackLayout>
+                <Button Text="Play" BackgroundColor="Transparent" BorderColor="DodgerBlue" BorderWidth="3"
+                        Command="{Binding PlayEpisode}" CommandParameter="{Binding PodcastEpisode}"/>
+            </StackLayout>
         </forms:CircleScrollView>
     </forms:CirclePage.Content>
 </wristCast:CircleView>

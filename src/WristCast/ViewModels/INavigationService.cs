@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace WristCast.Core.ViewModels
+namespace WristCast.ViewModels
 {
     public interface INavigationService
     {

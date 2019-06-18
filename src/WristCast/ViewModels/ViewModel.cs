@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Transactions;
-using Xamarin.Forms;
 
-namespace WristCast.Core.ViewModels
+namespace WristCast.ViewModels
 {
     public abstract class ViewModel:INotifyPropertyChanged
     {

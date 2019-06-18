@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Autofac;
-using WristCast.Core.IoC;
+﻿using System.Collections.Generic;
 using WristCast.Core.Model;
-using WristCast.Core.ViewModels;
 
 namespace WristCast.Core.Services
 {

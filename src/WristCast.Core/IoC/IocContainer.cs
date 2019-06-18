@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Autofac;
-using Autofac.Core;
+﻿using Autofac;
 
 namespace WristCast.Core.IoC
 {
@@ -10,12 +6,15 @@ namespace WristCast.Core.IoC
     {
         public static IContainer Instance;
 
-        public static void Initialize(Module module)
+        public static void Initialize(Module module = null)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterModule(module)
-                .RegisterModule<WristCastCoreModule>();
-            Instance=builder.Build();
+            builder.RegisterModule<WristCastCoreModule>();
+            if (module!=null)
+            {
+                builder.RegisterModule(module);
+            }
+            Instance = builder.Build();
         }
     }
 }

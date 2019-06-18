@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using WristCast.Core.ViewModels;
 
 namespace WristCast.Core.Services
 {

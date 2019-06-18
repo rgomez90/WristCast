@@ -1,4 +1,4 @@
-﻿namespace WristCast.Core.ViewModels
+﻿namespace WristCast.Core
 {
     public interface IStorageProvider
     {

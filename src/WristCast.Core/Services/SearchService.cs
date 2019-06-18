@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using ListenNotesSearch.NET;
 using WristCast.Core.Model;
-using WristCast.Core.ViewModels;
 using ApiSearchResults = ListenNotesSearch.NET.Models;
 
 namespace WristCast.Core.Services
@@ -46,15 +45,15 @@ namespace WristCast.Core.Services
             return p;
         }
 
-        public async Task<IEnumerable<PodcastSearchResult>> SearchPodcastsAsync(string name)
+        public async Task<IEnumerable<PodcastSearchResult>> SearchPodcastsAsync(string name, int? offset = null, int? count = null)
         {
-            var response = await Search<ApiSearchResults.PodcastSearchResult>(name);
+            var response = await Search<ApiSearchResults.PodcastSearchResult>(name, offset, count);
             return response.Cast<ApiSearchResults.PodcastSearchResult>().Select(x => x.ToResult());
         }
 
-        public async Task<IEnumerable<EpisodeSearchResult>> SearchEpisodesAsync(string name)
+        public async Task<IEnumerable<EpisodeSearchResult>> SearchEpisodesAsync(string name, int? offset = null, int? count = null)
         {
-            var response = await Search<ApiSearchResults.EpisodeSearchResult>(name);
+            var response = await Search<ApiSearchResults.EpisodeSearchResult>(name, offset, count);
             var episodes = response.Cast<ApiSearchResults.EpisodeSearchResult>().Select(x => x.ToResult()).ToArray();
             foreach (var episodeSearchResult in episodes)
             {
@@ -67,13 +66,14 @@ namespace WristCast.Core.Services
             return episodes;
         }
 
-        public async Task<IEnumerable<ListenNotesSearch.NET.Models.ISearchResult>> Search<T>(string name) where T : ListenNotesSearch.NET.Models.ISearchResult
+        public async Task<IEnumerable<ListenNotesSearch.NET.Models.ISearchResult>> Search<T>(string name, int? offset = null, int? count = null) where T : ListenNotesSearch.NET.Models.ISearchResult
         {
             _logger.Debug($"Searching containing '{name}'");
             try
             {
-                var response = await _client.SearchAsync<T>(name).ConfigureAwait(false);
+                var response = await _client.SearchAsync<T>(name, 1, offset).ConfigureAwait(false);
                 _logger.Debug($"Response:{response.Count}");
+                var results = count.HasValue ? response.Results.Take(count.Value) : response.Results;
                 return (IEnumerable<ApiSearchResults.ISearchResult>)response.Results;
             }
             catch (Exception ex)
@@ -91,12 +91,12 @@ namespace WristCast.Core.Services
             return episode;
         }
 
-        public async Task<IEnumerable<ISearchResult>> SearchAsync(string searchString, MediaType mediaType)
+        public async Task<IEnumerable<ISearchResult>> SearchAsync(string searchString, MediaType mediaType, int? offset = null, int? count = null)
         {
             switch (mediaType.Name)
             {
                 case nameof(MediaType.Podcast):
-                    return await SearchPodcastsAsync(searchString);
+                    return await SearchPodcastsAsync(searchString, offset, count);
                 case nameof(MediaType.Episode):
                     return await SearchEpisodesAsync(searchString);
                 default:

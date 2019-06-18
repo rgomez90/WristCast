@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Autofac;
 using Tizen.Network.Connection;
 using Tizen.System;
-using Tizen.Wearable.CircularUI.Forms;
-using WristCast.Core.IoC;
 using WristCast.Core.Services;
-using WristCast.Core.ViewModels;
+using WristCast.ViewModels;
 
 namespace WristCast.Views
 {
@@ -32,21 +28,5 @@ namespace WristCast.Views
                     Current = ConnectionManager.CurrentConnection,
                 };
             }
-    }
-
-    public class TizenStorageProvider : IStorageProvider
-    {
-        private IEnumerable<Storage> _storages;
-        private Storage _internalStorage;
-
-
-        public TizenStorageProvider()
-        {
-            _storages = StorageManager.Storages;
-            _internalStorage = _storages.SingleOrDefault(x => x.StorageType == StorageArea.Internal);
-            MediaFolderPath = Path.Combine(_internalStorage.GetAbsolutePath(DirectoryType.Music),"WristCast");
-        }
-
-        public string MediaFolderPath{get;}
     }
 }

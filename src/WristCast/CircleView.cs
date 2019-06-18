@@ -1,8 +1,7 @@
 ﻿using Autofac;
 using Tizen.Wearable.CircularUI.Forms;
-using WristCast.Core;
 using WristCast.Core.IoC;
-using WristCast.Core.ViewModels;
+using WristCast.ViewModels;
 
 namespace WristCast
 {

@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using WristCast.Core.ViewModels;
+﻿using WristCast.ViewModels;
 
-namespace WristCast.Core
+namespace WristCast
 {
     public interface IView<out T> where T:ViewModel
     {

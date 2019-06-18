@@ -1,6 +1,6 @@
 using WristCast.Core;
 using WristCast.Core.Model;
-using WristCast.Core.ViewModels;
+using WristCast.ViewModels;
 
 namespace WristCast
 {

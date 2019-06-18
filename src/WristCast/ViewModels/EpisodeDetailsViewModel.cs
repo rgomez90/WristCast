@@ -1,14 +1,11 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Input;
-using MediaManager;
-using MediaManager.Media;
+using WristCast.Core;
 using WristCast.Core.Model;
 using WristCast.Core.Services;
 using Xamarin.Forms;
 
-namespace WristCast.Core.ViewModels
+namespace WristCast.ViewModels
 {
     public class EpisodeDetailsViewModel : ViewModel<PodcastEpisode>
     {
@@ -30,10 +27,16 @@ namespace WristCast.Core.ViewModels
 
         private void PlayAudio()
         {
-            CrossMediaManager.Current.MediaQueue.Clear();
-            CrossMediaManager.Current.MediaQueue.Add(new MediaItem(
-                PodcastEpisode.IsDownloaded ? Path.Combine(_storageProvider.MediaFolderPath, PodcastEpisode.Id + ".mp3") : PodcastEpisode.Audio));
-            _navigationService.PushModalAsync<MediaPlayerViewModel>();
+            string source = "";
+            if (PodcastEpisode.IsDownloaded)
+            {
+                source = Path.Combine(_storageProvider.MediaFolderPath, PodcastEpisode.Id + ".mp3");
+            }
+            else
+            {
+                source = PodcastEpisode.Audio;
+            }
+            _navigationService.PushModalAsync<MediaPlayerViewModel, PodcastEpisode>(PodcastEpisode);
         }
 
         public void DownloadEpisode(PodcastEpisode episode)
@@ -47,8 +50,7 @@ namespace WristCast.Core.ViewModels
 
         private void OnDownloadStateChanged(object sender, DownloadStateChangedEventArgs e)
         {
-            Download download = sender as Download;
-            if (download == null) return;
+            if (!(sender is Download download)) return;
             if (download.Source == PodcastEpisode.Audio && e.NewState == DownloadState.Completed)
             {
                 IsDownloaded = true;

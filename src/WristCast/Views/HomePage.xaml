@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:c="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
              xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
-             xmlns:viewModels="clr-namespace:WristCast.Core.ViewModels;assembly=WristCast.Core"
+             xmlns:viewModels="clr-namespace:WristCast.ViewModels"
              x:Class="WristCast.Views.HomePage">
     <c:CirclePage.Content>
     <c:CircleStackLayout>
@@ -11,7 +11,7 @@
           VerticalOptions="CenterAndExpand"
           HorizontalOptions="CenterAndExpand" />
       <Button Text="Search" HorizontalOptions="Center" Command="{Binding Search}"/>
-      <Button Text="test" HorizontalOptions="Center" Clicked="Button_OnClicked"/>
+      <Button Text="test" HorizontalOptions="Center" Command="{Binding Test}"/>
       <Button Text="My Podcasts" HorizontalOptions="Center" Command="{Binding MyPodcasts}"/>
     </c:CircleStackLayout>
   </c:CirclePage.Content>

@@ -1,4 +1,4 @@
-﻿namespace WristCast.Core.ViewModels
+﻿namespace WristCast.ViewModels
 {
     public class MyPodcastViewModel:ViewModel
     {

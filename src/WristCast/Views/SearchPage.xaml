@@ -2,11 +2,11 @@
 <wristCast:CircleView x:TypeArguments="viewModels:SearchViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
-             xmlns:viewModels="clr-namespace:WristCast.Core.ViewModels;assembly=WristCast.Core"
              xmlns:circularUi="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:services="clr-namespace:WristCast.Core.Services;assembly=WristCast.Core"
+             xmlns:viewModels="clr-namespace:WristCast.ViewModels"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:SearchViewModel}"
              x:Class="WristCast.Views.SearchPage"
@@ -15,7 +15,8 @@
         <wristCast:EnumToBoolConverter x:Key="EnumToBoolConverter" />
     </circularUi:CirclePage.Resources>
     <circularUi:CirclePage.Content>
-        <StackLayout x:Name="Layout">
+        <circularUi:CircleScrollView x:Name="Layout">
+            <circularUi:CircleStackLayout>
                 <circularUi:PopupEntry Text="{Binding SearchText}" Placeholder="search"
                                        HorizontalOptions="FillAndExpand"
                                        VerticalOptions="CenterAndExpand"/>
@@ -28,8 +29,6 @@
                         VerticalOptions="Center" />
                     <circularUi:Radio GroupName="Type" Value="Podcast" Scale=".5"
                                       IsSelected="{Binding SelectedMediaType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static services:MediaType.Podcast}}"/>
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
                     <Label
                         HorizontalOptions="CenterAndExpand"
                         Text="Episode"
@@ -38,6 +37,7 @@
                     <circularUi:Radio GroupName="Type" Value="Episode" Scale=".5"
                                       IsSelected="{Binding SelectedMediaType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static services:MediaType.Episode}}"/>
                 </StackLayout>
+                <Button Text="Search" Command="{Binding Search}" CommandParameter="{Binding SearchText}" IsEnabled="{Binding IsSearchTextValid}" />
                 <circularUi:CircleListView ItemsSource="{Binding Podcasts}" IsVisible="{Binding IsValid}" ItemTapped="Cell_OnTapped">
                     <circularUi:CircleListView.ItemTemplate>
                         <DataTemplate>
@@ -65,9 +65,7 @@
                         </DataTemplate>
                     </circularUi:CircleListView.ItemTemplate>
                 </circularUi:CircleListView>
-            </StackLayout>
+            </circularUi:CircleStackLayout>
+        </circularUi:CircleScrollView>
     </circularUi:CirclePage.Content>
-    <circularUi:CirclePage.ActionButton>
-        <circularUi:ActionButtonItem Text="Search" Command="{Binding Search}" CommandParameter="{Binding SearchText}" IsEnabled="{Binding IsSearchTextValid}" />
-    </circularUi:CirclePage.ActionButton>
 </wristCast:CircleView>

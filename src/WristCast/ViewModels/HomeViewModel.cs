@@ -1,8 +1,12 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Autofac;
+using WristCast.Core;
+using WristCast.Core.IoC;
+using WristCast.Core.Model;
+using WristCast.Core.Services;
 using Xamarin.Forms;
 
-namespace WristCast.Core.ViewModels
+namespace WristCast.ViewModels
 {
     public class HomeViewModel : ViewModel
     {
@@ -14,9 +18,22 @@ namespace WristCast.Core.ViewModels
             _navigationService = navigationService;
             Search = new Command(async ()=>await _navigationService.PushModalAsync<SearchViewModel>());
             MyPodcasts= new Command(async ()=> await _navigationService.PushModalAsync<MyPodcastViewModel>());
+            Test= new Command(async ()=> await TestMeth());
+        }
+
+        private async Task TestMeth()
+        {
+            using (var con = IocContainer.Instance.BeginLifetimeScope())
+            {
+                var s = con.Resolve<ISearchService>();
+                var ep = await s.SearchEpisodeAsync("727ff294ace34c1884ce01d1ad2ad279");
+                await _navigationService.PushModalAsync<MediaPlayerViewModel, PodcastEpisode>(ep);
+            }
         }
 
         public Command Search { get; }
+
+        public Command Test { get; }
 
         public Command MyPodcasts{ get; }
 

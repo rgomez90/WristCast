@@ -1,8 +1,6 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using Autofac.Core;
 using WristCast.Core.Services;
-using WristCast.Core.ViewModels;
 
 namespace WristCast.Core.IoC
 {
@@ -19,7 +17,6 @@ namespace WristCast.Core.IoC
             builder.RegisterType<SearchService>().As<ISearchService>().WithParameter(
                 new ResolvedParameter((info, context) => info.ParameterType == typeof(string),
                     ((info, context) => "dad39050909646f9a6976c88fec19a01")));//Secrets.ApiKey)));
-            builder.RegisterAssemblyTypes(ThisAssembly).Where(x=>x.IsSubclassOf(typeof(ViewModel))).AsSelf();
         }
     }
 }

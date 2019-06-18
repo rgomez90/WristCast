@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using WristCast.Core.IoC;
 using Xamarin.Forms;
 
-namespace WristCast.Core.ViewModels
+namespace WristCast.ViewModels
 {
     public class XamarinNavigationService : INavigationService
     {

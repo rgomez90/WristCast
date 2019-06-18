@@ -1,31 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <!-- Property Group for Tizen Project -->
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <TizenCreateTpkOnBuild>false</TizenCreateTpkOnBuild>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugType>portable</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>None</DebugType>
-  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.2" />
     <PackageReference Include="Fody" Version="4.2.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Plugin.MediaManager" Version="0.6.2" />
     <PackageReference Include="PropertyChanged.Fody" Version="2.6.1" />
-    <PackageReference Include="Xamarin.Forms" Version="4.0.0.425677" />
   </ItemGroup>
 
-  <!-- Include Nuget Package for Tizen Project building -->
   <ItemGroup>
-    <ProjectReference Include="..\..\..\ListenNotesSearch.NET\src\ListenNotesSearch.NET\ListenNotesSearch.NET.csproj" />
+    <ProjectReference Include="D:\repos\ListenNotesSearch.NET\src\ListenNotesSearch.NET\ListenNotesSearch.NET.csproj" />
   </ItemGroup>
 
 </Project>

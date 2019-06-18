@@ -1,14 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using Autofac;
-using Tizen.Network.Connection;
+﻿using Autofac;
 using Tizen.Security;
-using Tizen.System;
 using Tizen.Wearable.CircularUI.Forms;
-using WristCast.Core;
 using WristCast.Core.IoC;
-using WristCast.Core.ViewModels;
+using WristCast.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -26,6 +20,7 @@ namespace WristCast
         protected override void OnStart()
         {
             PrivacyPrivilegeManager.RequestPermission("http://tizen.org/privilege/mediastorage");
+            PrivacyPrivilegeManager.RequestPermission("http://tizen.org/privilege/internet");
             PrivacyPrivilegeManager.RequestPermission("http://tizen.org/privilege/externalstorage");
         }
 
