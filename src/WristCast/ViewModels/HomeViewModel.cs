@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Autofac;
 using WristCast.Core;
 using WristCast.Core.IoC;
@@ -16,9 +17,9 @@ namespace WristCast.ViewModels
         public HomeViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            Search = new Command(async ()=>await _navigationService.PushModalAsync<SearchViewModel>());
-            MyPodcasts= new Command(async ()=> await _navigationService.PushModalAsync<MyPodcastViewModel>());
-            Test= new Command(async ()=> await TestMeth());
+            Search = new Command(async () => await _navigationService.PushAsync<SearchViewModel>());
+            MyPodcasts = new Command(async () => await _navigationService.PushAsync<MyPodcastViewModel>());
+            Test = new Command(async () => await TestMeth());
         }
 
         private async Task TestMeth()
@@ -27,7 +28,7 @@ namespace WristCast.ViewModels
             {
                 var s = con.Resolve<ISearchService>();
                 var ep = await s.SearchEpisodeAsync("727ff294ace34c1884ce01d1ad2ad279");
-                await _navigationService.PushModalAsync<MediaPlayerViewModel, PodcastEpisode>(ep);
+                await _navigationService.PushAsync<MediaPlayerViewModel, PodcastEpisode>(ep);
             }
         }
 
@@ -35,14 +36,22 @@ namespace WristCast.ViewModels
 
         public Command Test { get; }
 
-        public Command MyPodcasts{ get; }
+        public Command MyPodcasts { get; }
 
         public override async Task Init()
         {
-            _isFirstUse = Secrets.ApiKey == null;
-            if (_isFirstUse)
+            try
             {
-                await _navigationService.PushModalAsync<FirstUseViewModel>();
+                _isFirstUse = Secrets.ApiKey == null;
+                if (_isFirstUse)
+                {
+                    await _navigationService.PushAsync<FirstUseViewModel>();
+                }
+            }
+            catch (Exception)
+            {
+                ShowToast("Error reading ApiKey.\nPlease check ApiKey settings.");
+                throw;
             }
         }
     }

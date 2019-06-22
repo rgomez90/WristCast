@@ -1,45 +1,49 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<wristCast:CircleView x:TypeArguments="viewModels:MediaPlayerViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="clr-namespace:WristCast.Controls;assembly=WristCast"
-             xmlns:viewModels="clr-namespace:WristCast.ViewModels"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance viewModels:MediaPlayerViewModel}"
-             x:Class="WristCast.Views.MediaPlayerPage">
-    <AbsoluteLayout x:Name="CustomControlView"
-                    AbsoluteLayout.LayoutBounds="0, 250, 360, 80"
-                    AbsoluteLayout.LayoutFlags="None"
-                    BackgroundColor="#CC00FFA0">
-        <!--<controls:Background
-             Image="{Binding BgImage}"
-                HorizontalOptions="FillAndExpand"
-                Option="Stretch"
-                VerticalOptions="FillAndExpand" />-->
-        <Label Text="{Binding ActualTitle}"/>
-        <Slider Value="{Binding ActualSecond}" 
-                Maximum="{Binding ActualSecond}"
+﻿<wristCast:CircleView x:TypeArguments="viewModels:MediaPlayerViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+                      xmlns:fontAwesome="clr-namespace:WristCast.Utils"
+                      xmlns:viewModels="clr-namespace:WristCast.ViewModels"
+                      xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
+                      mc:Ignorable="d"
+                      d:DataContext="{d:DesignInstance viewModels:MediaPlayerViewModel}"
+                      x:Class="WristCast.Views.MediaPlayerPage"
+                      NavigationPage.HasNavigationBar="False">
+    <StackLayout>
+        <Label Text="{Binding ActualTitle}" />
+        <Slider Value="{Binding ActualSecond}"
+                Maximum="{Binding TotalSeconds}"
                 Minimum="0"
-                DragStartedCommand="{Binding MoveToStartedCommand}" 
-                DragCompletedCommand="{Binding MoveToCommand}"/>
-        <Button x:Name="backBtn"
-                ImageSource="{Binding BackButtonImage}" 
-                BackgroundColor="White"
-                Command="{Binding PreviousCommand}"
-                AbsoluteLayout.LayoutBounds="50, 0, 80, 80"
-                AbsoluteLayout.LayoutFlags="None"/>
-        <Button x:Name="playBtn"
-                BackgroundColor="Yellow"
-                ImageSource="{Binding PlayButtonImage}"
-                Command="{Binding PlayOrStopCommand}"
-                AbsoluteLayout.LayoutBounds="140, 0, 80, 80"
-                AbsoluteLayout.LayoutFlags="None" />
-        <Button x:Name="forwardBtn"
-                ImageSource="{Binding ForwardButtonImage}"
-                Command="{Binding NextCommand}"
-                AbsoluteLayout.LayoutBounds="230, 0, 80, 80"
-                AbsoluteLayout.LayoutFlags="None" />
-    </AbsoluteLayout>
+                Scale="1"
+                DragStartedCommand="{Binding MoveToStartedCommand}"
+                DragCompletedCommand="{Binding MoveToCommand}" />
+        <Button Text="{x:Static fontAwesome:FontAwesomeIcons.VolumeUp}"
+                FontFamily="FontAwesome5Solid"
+                Command="{Binding VolumeCommand}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="BackBtn"
+                    Grid.Column="0"
+                    WidthRequest="60"
+                    ImageSource="{Binding BackButtonImage}"
+                    BackgroundColor="White"
+                    Command="{Binding PreviousCommand}" />
+            <Button x:Name="PlayBtn"
+                    Grid.Column="1"
+                    WidthRequest="60"
+                    BackgroundColor="Yellow"
+                    ImageSource="{Binding PlayButtonImage}"
+                    Command="{Binding PlayOrStopCommand}" />
+            <Button x:Name="ForwardBtn"
+                    Grid.Column="2"
+                    WidthRequest="60"
+                    ImageSource="{Binding ForwardButtonImage}"
+                    Command="{Binding NextCommand}" />
+        </Grid>
+    </StackLayout>
 </wristCast:CircleView>

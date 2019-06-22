@@ -1,0 +1,38 @@
+﻿<wristCast:CircleView x:TypeArguments="viewModels:VolumeViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:viewModels="clr-namespace:WristCast.ViewModels;assembly=WristCast"
+                      xmlns:fontawesome="clr-namespace:WristCast.Utils;assembly=WristCast"
+                      xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+                      mc:Ignorable="d"
+                      d:DataContext="{d:DesignInstance viewModels:VolumeViewModel}"
+                      x:Class="WristCast.Views.VolumePage"
+                      RotaryFocusObject="{x:Reference Slider}">
+    <wristCast:CircleView.CircleSurfaceItems>
+        <forms:CircleSliderSurfaceItem
+            x:Name="Slider"
+            Value="{Binding Volume}"
+            BarColor="DeepSkyBlue"
+            BarLineWidth="10"
+            Increment="1"
+            Maximum="10"
+            Minimum="1" />
+    </wristCast:CircleView.CircleSurfaceItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Text="{Binding VolumeIcon}"
+                    FontFamily="{StaticResource FontawesomeSolid}"
+                    BackgroundColor="Transparent"
+                    Command="{Binding VolumeCommand}"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand" />
+            <Label FontSize="Large"
+                   FontAttributes="Bold"
+                   HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   Text="{Binding Volume}" />
+        </StackLayout>
+    </ContentPage.Content>
+</wristCast:CircleView>

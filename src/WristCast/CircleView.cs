@@ -15,8 +15,12 @@ namespace WristCast
 
         protected override async void OnAppearing()
         {
-            base.OnAppearing();
             await ViewModel.Init();
+        }
+
+        protected override async void OnDisappearing()
+        {
+            await ViewModel.Clean();
         }
 
         public T ViewModel { get; }

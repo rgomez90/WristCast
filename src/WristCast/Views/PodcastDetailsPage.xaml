@@ -1,56 +1,61 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<wristCast:CircleView x:TypeArguments="viewModels:PodcastDetailsViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
-             xmlns:viewModels="clr-namespace:WristCast.ViewModels"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance viewModels:PodcastDetailsViewModel}"
-             x:Class="WristCast.Views.PodcastDetailsPage"
-             RotaryFocusObject="{x:Reference ListView}">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wristCast:CircleView x:TypeArguments="viewModels:PodcastDetailsViewModel"
+                      xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+                      xmlns:viewModels="clr-namespace:WristCast.ViewModels"
+                      mc:Ignorable="d"
+                      d:DataContext="{d:DesignInstance viewModels:PodcastDetailsViewModel}"
+                      x:Class="WristCast.Views.PodcastDetailsPage"
+                      RotaryFocusObject="{x:Reference ListView}"
+                      NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding Podcast.Name}"
-                VerticalOptions="StartAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <forms:Check DisplayStyle="Small" IsToggled="{Binding Podcast.IsSubscribed}"/>
-            <forms:CircleListView x:Name="ListView" ItemsSource="{Binding Podcast.Episodes}"
-                                  ItemTapped="Cell_OnTapped" RefreshCommand="{Binding RefreshCommand}">
-                <forms:CircleListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <StackLayout
-                                HeightRequest="120"
-                                HorizontalOptions="FillAndExpand"
-                                Orientation="Vertical"
-                                VerticalOptions="FillAndExpand">
-                                    <Label FontSize="7"
-                                       HorizontalOptions="Center"
-                                       HorizontalTextAlignment="Center"
-                                       Text="{Binding Title}" 
-                                       VerticalOptions="Center"
-                                       VerticalTextAlignment="Center" />
-                                    <Label 
-                                    FontSize="5"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Center"
-                                    Text="{Binding DescriptionShort}"
-                                    VerticalOptions="Center"
-                                    VerticalTextAlignment="Center"/>
+        <forms:CircleScrollView>
+            <StackLayout>
+                <Label Text="{Binding Podcast.Name}" FontSize="6"
+                       HorizontalOptions="CenterAndExpand" />
+                <forms:Check DisplayStyle="Small" IsToggled="{Binding Podcast.IsSubscribed}"/>
+                <forms:CircleListView x:Name="ListView"
+                                      ItemsSource="{Binding Podcast.Episodes}"
+                                      ItemTapped="Cell_OnTapped" 
+                                      RefreshCommand="{Binding RefreshCommand}"
+                                      HorizontalOptions="FillAndExpand">
+                    <forms:CircleListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <StackLayout
+                                        HeightRequest="120"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="FillAndExpand">
+                                        <Label FontSize="5"
+                                               HorizontalOptions="Center"
+                                               HorizontalTextAlignment="Center"
+                                               Text="{Binding Title}"
+                                               VerticalOptions="Center"
+                                               VerticalTextAlignment="Center" />
+                                        <Label
+                                            FontSize="4"
+                                            HorizontalOptions="Center"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{Binding DescriptionShort}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                    </StackLayout>
+                                    <forms:Check
+                                        IsToggled="{Binding IsDownloaded}"
+                                        DisplayStyle="Small"
+                                        HorizontalOptions="Start"
+                                        VerticalOptions="Center" />
                                 </StackLayout>
-                                <forms:Check
-                                    IsToggled="{Binding }"
-                                    DisplayStyle="Default"
-                                    HorizontalOptions="Start"
-                                    VerticalOptions="Center" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </forms:CircleListView.ItemTemplate>
-            </forms:CircleListView>
-        </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </forms:CircleListView.ItemTemplate>
+                </forms:CircleListView>
+            </StackLayout>
+        </forms:CircleScrollView>
     </ContentPage.Content>
 </wristCast:CircleView>

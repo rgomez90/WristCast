@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using WristCast.Core.IoC;
@@ -10,27 +12,49 @@ namespace WristCast.ViewModels
     {
         private readonly Lazy<INavigation> _navigation = new Lazy<INavigation>(GetNavigation);
 
-        private static INavigation GetNavigation()
+        public IReadOnlyList<IView<ViewModel>> Stack => _navigation.Value.NavigationStack.Cast<IView<ViewModel>>().ToList();
+
+        public IReadOnlyList<IView<ViewModel>> ModalStack => _navigation.Value.ModalStack.Cast<IView<ViewModel>>().ToList();
+
+        public Task PopAsync(bool animated = false)
         {
-            return Application.Current.MainPage.Navigation;
+            return _navigation.Value.PopAsync(animated);
         }
 
-        public Task PushModalAsync<T>() where T : ViewModel
+        public Task PopModalAsync(bool animated = false)
         {
-            var view=(Page)IocContainer.Instance.Resolve<IView<T>>();
-            return _navigation.Value.PushModalAsync(view);
+            return _navigation.Value.PopModalAsync(animated);
         }
 
-        public async Task PushModalAsync<T, TParam>(TParam param) where T : ViewModel<TParam>
+        public Task PushAsync<T>(bool animated = false) where T : ViewModel
+        {
+            var view = (Page)IocContainer.Instance.Resolve<IView<T>>();
+            return _navigation.Value.PushAsync(view, animated);
+        }
+
+        public async Task PushAsync<T, TParam>(TParam param, bool animated = false) where T : ViewModel<TParam>
         {
             var t = IocContainer.Instance.Resolve<IView<T>>();
             t.ViewModel.Prepare(param);
-            await _navigation.Value.PushModalAsync((Page) t);
+            await _navigation.Value.PushAsync((Page)t, animated);
         }
 
-        public Task PopModalAsync()
+        public Task PushModalAsync<T>(bool animated = false) where T : ViewModel
         {
-            return _navigation.Value.PopModalAsync();
+            var view = (Page)IocContainer.Instance.Resolve<IView<T>>();
+            return _navigation.Value.PushModalAsync(view, animated);
+        }
+
+        public async Task PushModalAsync<T, TParam>(TParam param, bool animated = false) where T : ViewModel<TParam>
+        {
+            var t = IocContainer.Instance.Resolve<IView<T>>();
+            t.ViewModel.Prepare(param);
+            await _navigation.Value.PushModalAsync((Page)t, animated);
+        }
+
+        private static INavigation GetNavigation()
+        {
+            return Application.Current.MainPage.Navigation;
         }
     }
 }

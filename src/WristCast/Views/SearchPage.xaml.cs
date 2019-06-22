@@ -1,6 +1,4 @@
-﻿using WristCast.Core.Services;
-using WristCast.ViewModels;
-using Xamarin.Forms;
+﻿using WristCast.ViewModels;
 using Xamarin.Forms.Xaml;
 
 namespace WristCast.Views
@@ -12,12 +10,5 @@ namespace WristCast.Views
 		{
 			InitializeComponent ();
 		}
-        
-        private async void Cell_OnTapped(object sender, ItemTappedEventArgs e)
-        {
-            if (e.Item == null) return;
-            var selectedItem = e.Item as ISearchResult;
-            await ViewModel.ShowDetails(selectedItem);
-        }
     }
 }

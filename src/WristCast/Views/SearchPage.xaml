@@ -1,71 +1,54 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <wristCast:CircleView x:TypeArguments="viewModels:SearchViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
-             xmlns:circularUi="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:services="clr-namespace:WristCast.Core.Services;assembly=WristCast.Core"
-             xmlns:viewModels="clr-namespace:WristCast.ViewModels"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance viewModels:SearchViewModel}"
-             x:Class="WristCast.Views.SearchPage"
-             RotaryFocusObject="{x:Reference Layout}">
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
+                      xmlns:circularUi="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:services="clr-namespace:WristCast.Core.Services;assembly=WristCast.Core"
+                      xmlns:viewModels="clr-namespace:WristCast.ViewModels"
+                      mc:Ignorable="d"
+                      d:DataContext="{d:DesignInstance viewModels:SearchViewModel}"
+                      x:Class="WristCast.Views.SearchPage"
+                      NavigationPage.HasNavigationBar="False">
     <circularUi:CirclePage.Resources>
         <wristCast:EnumToBoolConverter x:Key="EnumToBoolConverter" />
     </circularUi:CirclePage.Resources>
+    <circularUi:CirclePage.ActionButton>
+        <circularUi:ActionButtonItem Text="Search"
+                                     Command="{Binding SearchCommand}"
+                                     CommandParameter="{Binding SearchText}"
+                                     IsEnabled="{Binding IsSearchTextValid}" />
+    </circularUi:CirclePage.ActionButton>
     <circularUi:CirclePage.Content>
-        <circularUi:CircleScrollView x:Name="Layout">
-            <circularUi:CircleStackLayout>
-                <circularUi:PopupEntry Text="{Binding SearchText}" Placeholder="search"
-                                       HorizontalOptions="FillAndExpand"
-                                       VerticalOptions="CenterAndExpand"/>
-                <ActivityIndicator IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}"/>
+        <StackLayout>
+            <circularUi:PopupEntry Text="{Binding SearchText}"
+                                   Placeholder="Search"
+                                   WidthRequest="100" />
+            <Grid HeightRequest="120">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
                 <StackLayout Orientation="Horizontal">
-                    <Label
-                        HorizontalOptions="CenterAndExpand"
-                        FontSize="6"
-                        Text="Podcast"
-                        VerticalOptions="Center" />
+                    <Label HorizontalOptions="CenterAndExpand"
+                           FontSize="6"
+                           Text="Podcast"
+                           VerticalOptions="Center" />
                     <circularUi:Radio GroupName="Type" Value="Podcast" Scale=".5"
-                                      IsSelected="{Binding SelectedMediaType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static services:MediaType.Podcast}}"/>
+                                      IsSelected="{Binding SelectedMediaType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static services:MediaType.Podcast}}" />
+                </StackLayout>
+                <StackLayout Grid.Column="1" Orientation="Horizontal">
                     <Label
                         HorizontalOptions="CenterAndExpand"
                         Text="Episode"
                         FontSize="6"
                         VerticalOptions="Center" />
                     <circularUi:Radio GroupName="Type" Value="Episode" Scale=".5"
-                                      IsSelected="{Binding SelectedMediaType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static services:MediaType.Episode}}"/>
+                                      IsSelected="{Binding SelectedMediaType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static services:MediaType.Episode}}" />
                 </StackLayout>
-                <Button Text="Search" Command="{Binding Search}" CommandParameter="{Binding SearchText}" IsEnabled="{Binding IsSearchTextValid}" />
-                <circularUi:CircleListView ItemsSource="{Binding Podcasts}" IsVisible="{Binding IsValid}" ItemTapped="Cell_OnTapped">
-                    <circularUi:CircleListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout 
-                                HeightRequest="120"
-                                HorizontalOptions="FillAndExpand"
-                                Orientation="Horizontal"
-                                VerticalOptions="FillAndExpand">
-                                    <Label FontSize="6"
-                                       HorizontalOptions="Center"
-                                       HorizontalTextAlignment="Center"
-                                       Text="{Binding TitleOriginal}" 
-                                       VerticalOptions="Center"
-                                       VerticalTextAlignment="Center" />
-                                    <Label 
-                                        FontSize="4"
-                                        HorizontalOptions="Center"
-                                        HorizontalTextAlignment="Center"
-                                        Text="{Binding DescriptionHighlighted}"
-                                        VerticalOptions="Center"
-                                        VerticalTextAlignment="Center"/>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </circularUi:CircleListView.ItemTemplate>
-                </circularUi:CircleListView>
-            </circularUi:CircleStackLayout>
-        </circularUi:CircleScrollView>
+            </Grid>
+        </StackLayout>
     </circularUi:CirclePage.Content>
 </wristCast:CircleView>

@@ -27,7 +27,7 @@ namespace WristCast.Core.Services
             _log.Info($"Added Download {download.Id} from {download.Source}");
             if (_downloads.Count(x => x.Value.State == DownloadState.Downloading) < _downloadLimit)
             {
-                download.Execute();
+                download.Execute().ConfigureAwait(false);
             }
         }
 

@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="D:\repos\ListenNotesSearch.NET\src\ListenNotesSearch.NET\ListenNotesSearch.NET.csproj" />
+    <ProjectReference Include="..\..\..\ListenNotesSearch.NET\src\ListenNotesSearch.NET\ListenNotesSearch.NET.csproj" />
   </ItemGroup>
 
 </Project>

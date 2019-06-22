@@ -14,7 +14,7 @@ namespace WristCast
             {
                 return Encoding.UTF8.GetString(DataManager.Get(alias, null));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

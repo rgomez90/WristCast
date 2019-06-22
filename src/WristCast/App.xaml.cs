@@ -14,13 +14,12 @@ namespace WristCast
         public App()
         {
             InitializeComponent();
-                MainPage = ((CirclePage)IocContainer.Instance.Resolve<IView<HomeViewModel>>());
+            MainPage = new NavigationPage((CirclePage)IocContainer.Instance.Resolve<IView<HomeViewModel>>());
         }
 
         protected override void OnStart()
         {
             PrivacyPrivilegeManager.RequestPermission("http://tizen.org/privilege/mediastorage");
-            PrivacyPrivilegeManager.RequestPermission("http://tizen.org/privilege/internet");
             PrivacyPrivilegeManager.RequestPermission("http://tizen.org/privilege/externalstorage");
         }
 

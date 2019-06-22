@@ -8,6 +8,7 @@ namespace WristCast
         protected override void OnCreate()
         {
             base.OnCreate();
+            ElmSharp.Utility.AppendGlobalFontPath(this.DirectoryInfo.Resource);
             IocContainer.Initialize(new WristCastModule());
             LoadApplication(new App());
         }

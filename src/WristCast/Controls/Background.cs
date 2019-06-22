@@ -36,7 +36,7 @@ namespace WristCast.Controls
         /// <summary>
         /// Image source property
         /// </summary>
-        public static readonly BindableProperty ImageProperty = BindableProperty.Create("Image", typeof(FileImageSource), typeof(UriImageSource), default(UriImageSource));
+        public static readonly BindableProperty ImageProperty = BindableProperty.Create("Image", typeof(UriImageSource), typeof(Background), default(UriImageSource));
 
         /// <summary>
         /// BackgroundOptions type property

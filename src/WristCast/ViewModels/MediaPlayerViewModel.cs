@@ -11,18 +11,19 @@ namespace WristCast.ViewModels
 {
     public class MediaPlayerViewModel : ViewModel<PodcastEpisode>
     {
+        private readonly INavigationService _navigationService;
         private readonly IStorageProvider _storageProvider;
-        private readonly Player _mediaPlayer;
+        private PodcastEpisode _parameter;
 
-        public MediaPlayerViewModel(IStorageProvider storageProvider)
+        public MediaPlayerViewModel(IStorageProvider storageProvider, INavigationService navigationService)
         {
             _storageProvider = storageProvider;
-            _mediaPlayer = new Player();
-            BgImage = new UriImageSource();
-            PlayOrStopCommand = new Command(async () => await PlayOrStop());
+            _navigationService = navigationService;
+            PlayOrStopCommand = new Command(PlayOrStop);
             StopCommand = new Command(Stop);
             NextCommand = new Command(Next);
             PreviousCommand = new Command(Previous);
+            VolumeCommand = new Command(async () => await navigationService.PushModalAsync<VolumeViewModel>());
             BackButtonImage = ImageSource.FromFile("10_sec_backward.png");
             PauseButtonImage = ImageSource.FromFile("pause.png");
             PlayButtonImage = ImageSource.FromFile("play.png");
@@ -30,21 +31,18 @@ namespace WristCast.ViewModels
             ForwardButtonImage = ImageSource.FromFile("10_sec_forward.png");
             MoveToCommand = new Command(MoveTo);
             MoveToStartedCommand = new Command(MoveToStarted);
+            AddEventHandlers();
         }
 
-        public double ActualSecond
-        {
-            get
-            {
-                if (_mediaPlayer.State == PlayerState.Idle || _mediaPlayer.State == PlayerState.Preparing)
-                    return -1;
-                return _mediaPlayer.GetPlayPosition();
-            }
-        }
+        public string ActualPosition => AudioPlayer.Current.Position.ToString("g");
 
-        public string ActualTitle { get; private set; }
+        public int ActualSecond => (int)AudioPlayer.Current.Position.TotalSeconds;
+
+        public string ActualTitle => CurrentEpisode?.Title ?? string.Empty;
 
         public ImageSource BackButtonImage { get; }
+
+        public ImageSource BgImage { get; set; }
 
         public ImageSource ForwardButtonImage { get; set; }
 
@@ -66,24 +64,47 @@ namespace WristCast.ViewModels
 
         public ICommand StopCommand { get; set; }
 
-        public double TotalSeconds => 0;
-
-        public UriImageSource BgImage { get; set; }
-
-        public async Task PlayOrStop()
+        public double TotalSeconds
         {
-            switch (_mediaPlayer.State)
+            get => AudioPlayer.Current.Duration.TotalSeconds == 0 ? 1 : AudioPlayer.Current.Duration.TotalSeconds;
+            //{
+            //    if (AudioPlayer.Current.MediaPlayer.State == PlayerState.Preparing
+            //        || AudioPlayer.Current.MediaPlayer.State == PlayerState.Idle)
+            //        return 0;
+            //    return AudioPlayer.Current.MediaPlayer.StreamInfo.GetDuration();
+            //}
+        }
+
+        public ICommand VolumeCommand { get; set; }
+
+        private static PodcastEpisode CurrentEpisode { get; set; }
+
+        public override Task Clean()
+        {
+            RemoveEventHandlers();
+            return Task.CompletedTask;
+        }
+
+        public override async Task Init()
+        {
+            if (_parameter != null)
             {
-                case PlayerState.Idle:
-                    await _mediaPlayer.PrepareAsync();
-                    _mediaPlayer.Start();
-                    break;
+                if (CurrentEpisode != null && CurrentEpisode.Id == _parameter.Id) return;
+                await ChangeSource(_parameter);
+                AudioPlayer.Current.Play();
+            }
+        }
+
+        public void PlayOrStop()
+        {
+            switch (AudioPlayer.Current.State)
+            {
                 case PlayerState.Ready:
                 case PlayerState.Paused:
-                    _mediaPlayer.Start();
+                    AudioPlayer.Current.Play();
                     break;
                 case PlayerState.Playing:
-                    _mediaPlayer.Pause();
+                    AudioPlayer.Current.Pause();
                     break;
                 case PlayerState.Preparing:
                     break;
@@ -92,42 +113,73 @@ namespace WristCast.ViewModels
             }
         }
 
+        public override void Prepare(PodcastEpisode parameter)
+        {
+            _parameter = parameter;
+        }
+
+        private void AddEventHandlers()
+        {
+            AudioPlayer.Current.PlayPositionChanged += OnPlayPositionChanged;
+            AudioPlayer.Current.MetadataReady += OnMetadataReady;
+            AudioPlayer.Current.SourceChanged += OnSourceChanged;
+        }
+
+        private async Task ChangeSource(PodcastEpisode source)
+        {
+            var file = Path.Combine(_storageProvider.MediaFolderPath, source.Id + ".mp3");
+            MediaSource mediaSource = source.IsDownloaded && File.Exists(file) ?
+                new MediaUriSource(file) :
+                new MediaUriSource(source.Audio);
+            await AudioPlayer.Current.ChangeSource(mediaSource);
+        }
+
         private void MoveTo()
         {
         }
 
-        private async void MoveToStarted()
+        private void MoveToStarted()
         {
-            await _mediaPlayer.SetPlayPositionAsync(-_mediaPlayer.GetPlayPosition(), false);
         }
 
         private void Next()
         {
+        }
 
+        private void OnMetadataReady(object sender, EventArgs e)
+        {
+            OnPropertyChanged(nameof(ActualTitle));
+            OnPropertyChanged(nameof(ActualSecond));
+            OnPropertyChanged(nameof(TotalSeconds));
+            OnPropertyChanged(nameof(ActualPosition));
+        }
+
+        private void OnPlayPositionChanged(object sender, TimeSpan e)
+        {
+            OnPropertyChanged(nameof(ActualSecond));
+            OnPropertyChanged(nameof(ActualPosition));
+        }
+
+        private void OnSourceChanged(object sender, EventArgs e)
+        {
+            BgImage = ImageSource.FromUri(new Uri(_parameter.Image));
+            CurrentEpisode = _parameter;
+            _parameter = null;
         }
 
         private void Previous()
         {
         }
 
-        private void Stop()
+        private void RemoveEventHandlers()
         {
-            _mediaPlayer.Stop();
+            AudioPlayer.Current.PlayPositionChanged -= OnPlayPositionChanged;
+            AudioPlayer.Current.MetadataReady -= OnMetadataReady;
         }
 
-        public override void Prepare(PodcastEpisode parameter)
+        private void Stop()
         {
-            var file = Path.Combine(_storageProvider.MediaFolderPath, parameter.Id + ".mp3");
-            BgImage = new UriImageSource { Uri = new Uri(parameter.Image) };
-            if (parameter.IsDownloaded && File.Exists(file))
-            {
-                _mediaPlayer.SetSource(new MediaUriSource(file));
-            }
-            else
-            {
-                _mediaPlayer.SetSource(new MediaUriSource(parameter.Audio));
-            }
-
+            AudioPlayer.Current.Stop();
         }
     }
 }

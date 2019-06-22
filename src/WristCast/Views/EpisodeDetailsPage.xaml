@@ -1,37 +1,53 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<wristCast:CircleView x:TypeArguments="viewModels:EpisodeDetailsViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
-             xmlns:viewModels="clr-namespace:WristCast.ViewModels"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance viewModels:EpisodeDetailsViewModel}"
-             x:Class="WristCast.Views.EpisodeDetailsPage"
-             RotaryFocusObject="{x:Reference Sv}">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wristCast:CircleView x:TypeArguments="viewModels:EpisodeDetailsViewModel"
+                      xmlns="http://xamarin.com/schemas/2014/forms"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+                      xmlns:viewModels="clr-namespace:WristCast.ViewModels"
+                      xmlns:fontAwesome="clr-namespace:WristCast.Utils"
+                      mc:Ignorable="d"
+                      d:DataContext="{d:DesignInstance viewModels:EpisodeDetailsViewModel}"
+                      x:Class="WristCast.Views.EpisodeDetailsPage"
+                      RotaryFocusObject="{x:Reference Sv}"
+                      NavigationPage.HasNavigationBar="False">
     <forms:CirclePage.Content>
         <forms:CircleScrollView x:Name="Sv">
-            <StackLayout HorizontalOptions="FillAndExpand"
-                         Orientation="Vertical"
-                         VerticalOptions="FillAndExpand">
+            <forms:CircleStackLayout HorizontalOptions="FillAndExpand"
+                                     Orientation="Vertical"
+                                     VerticalOptions="FillAndExpand">
                 <Label Text="{Binding PodcastEpisode.Title}"
-                   FontSize="6"
-                   HorizontalOptions="CenterAndExpand" />
+                       FontSize="5"
+                       HorizontalOptions="CenterAndExpand" />
                 <Label Text="{Binding PodcastEpisode.Description}"
-                   FontSize="5"
-                   HorizontalOptions="CenterAndExpand" />
-                <StackLayout Orientation="Horizontal">
-                    <forms:Check IsToggled="{Binding IsDownloaded }"
-                                 DisplayStyle="Small"
-                                 HorizontalOptions="Start"
-                                 VerticalOptions="Center" />
-                    <Button Text="Download" IsVisible="{Binding CanDownload}" BackgroundColor="Transparent" BorderColor="GreenYellow" BorderWidth="3"
-                            Command="{Binding DownloadEpisodeCommand}" CommandParameter="{Binding PodcastEpisode}"/>
-                </StackLayout>
-                <Button Text="Play" BackgroundColor="Transparent" BorderColor="DodgerBlue" BorderWidth="3"
-                        Command="{Binding PlayEpisode}" CommandParameter="{Binding PodcastEpisode}"/>
-            </StackLayout>
+                       FontSize="4"
+                       HorizontalOptions="CenterAndExpand" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Button Text="{x:Static fontAwesome:FontAwesomeIcons.Download}"
+                            FontFamily="FontAwesome5Solid"
+                            IsEnabled="{Binding CanDownload}"
+                            TextColor="{Binding DownloadColor}"
+                            BackgroundColor="Transparent"
+                            BorderColor="{Binding DownloadColor}"
+                            BorderWidth="5"
+                            Command="{Binding DownloadEpisodeCommand}"
+                            CommandParameter="{Binding PodcastEpisode}" />
+                    <Button Grid.Column="1"
+                            Text="{x:Static fontAwesome:FontAwesomeIcons.PlayCircle}"
+                            FontFamily="FontAwesome5Solid"
+                            BackgroundColor="Transparent"
+                            BorderColor="White"
+                            BorderWidth="5"
+                            Command="{Binding PlayEpisode}"
+                            CommandParameter="{Binding PodcastEpisode}" />
+                </Grid>
+            </forms:CircleStackLayout>
         </forms:CircleScrollView>
     </forms:CirclePage.Content>
 </wristCast:CircleView>

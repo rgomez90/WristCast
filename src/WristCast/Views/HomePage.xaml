@@ -4,15 +4,31 @@
              xmlns:c="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
              xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
              xmlns:viewModels="clr-namespace:WristCast.ViewModels"
-             x:Class="WristCast.Views.HomePage">
+             xmlns:fontawesome="clr-namespace:WristCast.Utils;assembly=WristCast"
+             x:Class="WristCast.Views.HomePage"
+             NavigationPage.HasNavigationBar="False">
     <c:CirclePage.Content>
-    <c:CircleStackLayout>
-      <Label Text="{Binding ApiKey}"
-          VerticalOptions="CenterAndExpand"
-          HorizontalOptions="CenterAndExpand" />
-      <Button Text="Search" HorizontalOptions="Center" Command="{Binding Search}"/>
-      <Button Text="test" HorizontalOptions="Center" Command="{Binding Test}"/>
-      <Button Text="My Podcasts" HorizontalOptions="Center" Command="{Binding MyPodcasts}"/>
-    </c:CircleStackLayout>
-  </c:CirclePage.Content>
+        <c:CircleScrollView>
+            <StackLayout>
+                <Label Text="{Binding ApiKey}"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand"/>
+                <Button Text="{x:Static fontawesome:FontAwesomeIcons.PlayCircle}"
+                        FontFamily="FontAwesome5"  
+                        BorderColor="White"
+                        BorderWidth="5"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="Center"/>
+                <Button Text="Search" 
+                    HorizontalOptions="Center" 
+                    Command="{Binding Search}"/>
+                <Button Text="test" 
+                    HorizontalOptions="Center" 
+                    Command="{Binding Test}"/>
+                <Button Text="My Podcasts" 
+                    HorizontalOptions="Center" 
+                    Command="{Binding MyPodcasts}"/>
+            </StackLayout>
+        </c:CircleScrollView>
+    </c:CirclePage.Content>
 </wristCast:CircleView>

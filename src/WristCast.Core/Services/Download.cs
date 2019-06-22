@@ -57,7 +57,7 @@ namespace WristCast.Core.Services
                     await service.DownloadFileAsync(Source,FilePath, _cts.Token);
                     SetState(DownloadState.Completed);
                 }
-                catch (TaskCanceledException ex)
+                catch (TaskCanceledException)
                 {
                     SetState(DownloadState.Cancelled);
 

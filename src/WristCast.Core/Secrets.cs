@@ -8,13 +8,13 @@ namespace WristCast.Core
     {
         public const string KeyAlias = "ListenNotesApiKey";
 
-        private static readonly Lazy<ISecretsService> _sercive = new Lazy<ISecretsService>(GetService);
+        private static readonly Lazy<ISecretsService> Sercive = new Lazy<ISecretsService>(GetService);
 
         private static ISecretsService GetService()
         {
             return IocContainer.Instance.Resolve<ISecretsService>();
         }
 
-        public static string ApiKey => _sercive.Value.ReadSecretAsync(KeyAlias);
+        public static string ApiKey => Sercive.Value.ReadSecretAsync(KeyAlias);
     }
 }
