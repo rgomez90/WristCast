@@ -57,7 +57,7 @@ namespace WristCast.Core.Model
 
         public PodcastMetadata GetMetadata()
         {
-            return new PodcastMetadata(Name, Description);
+            return new PodcastMetadata(Id, Name, Description);
         }
     }
 }

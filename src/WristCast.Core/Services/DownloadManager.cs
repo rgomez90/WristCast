@@ -83,5 +83,11 @@ namespace WristCast.Core.Services
         {
             _downloads[id].Cancel();
         }
+
+        protected virtual async void OnDownloadCompleted(Download e)
+        {
+            await PodcastManager.Current.AddDownloadedEpisode(e.Source.GetMetadata());
+            DownloadCompleted?.Invoke(this, e);
+        }
     }
 }

@@ -32,6 +32,8 @@ namespace WristCast.ViewModels
             }
         }
 
+        public string ApiKey { get; private set; }
+
         public Command Search { get; }
 
         public Command Test { get; }
@@ -42,7 +44,8 @@ namespace WristCast.ViewModels
         {
             try
             {
-                _isFirstUse = Secrets.ApiKey == null;
+                ApiKey = Secrets.ApiKey;
+                _isFirstUse = ApiKey == null;
                 if (_isFirstUse)
                 {
                     await _navigationService.PushModalAsync<FirstUseViewModel>();

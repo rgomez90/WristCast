@@ -39,7 +39,7 @@ namespace WristCast.ViewModels
         {
             IsDownloaded = false;
             var filePath = Path.Combine(_storageProvider.MediaFolderPath, $"{episode.Id}.mp3");
-            var download = new Download(episode.Audio, filePath);
+            var download = new Download(episode, filePath);
             _downloadService.AddDownload(download);
             download.StateChanged += OnDownloadStateChanged;
         }
@@ -53,7 +53,7 @@ namespace WristCast.ViewModels
         private void OnDownloadStateChanged(object sender, DownloadStateChangedEventArgs e)
         {
             if (!(sender is Download download)) return;
-            if (download.Source == PodcastEpisode.Audio && e.NewState == DownloadState.Completed)
+            if (download.Source == PodcastEpisode && e.NewState == DownloadState.Completed)
             {
                 IsDownloaded = true;
             }

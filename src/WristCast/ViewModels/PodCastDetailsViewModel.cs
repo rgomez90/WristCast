@@ -24,7 +24,15 @@ namespace WristCast.ViewModels
             RefreshCommand = new Command(Refresh);
             LoadEpisodesCommand = new Command(LoadEpisodes);
             SubscribeToPodcastCommand = new Command(SubscribeToPodcast);
+            UnSubscribeToPodcastCommand = new Command(UnSubscribeToPodcast);
         }
+
+        private void UnSubscribeToPodcast(object obj)
+        {
+            _podcastMetadaRepository.Remove(Podcast.GetMetadata());
+        }
+
+        public ICommand UnSubscribeToPodcastCommand { get; set; }
 
         private void SubscribeToPodcast()
         {
@@ -32,6 +40,7 @@ namespace WristCast.ViewModels
         }
 
         public ICommand LoadEpisodesCommand { get; set; }
+
         public ICommand SubscribeToPodcastCommand { get; set; }
 
         public Podcast Podcast { get; private set; }

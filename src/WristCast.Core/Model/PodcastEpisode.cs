@@ -42,5 +42,10 @@ namespace WristCast.Core.Model
         public string DescriptionShort => Description.Length < 35 ? Description : $"{Description.Substring(0, 35)}...";
 
         public Podcast Podcast { get; internal set; }
+
+        public PodcastEpisodeMetadata GetMetadata()
+        {
+            return new PodcastEpisodeMetadata(Id, Title, PublishDate, Description);
+        }
     }
 }

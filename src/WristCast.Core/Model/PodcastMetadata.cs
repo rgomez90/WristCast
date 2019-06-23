@@ -6,7 +6,7 @@ namespace WristCast.Core.Model
     {
         public PodcastMetadata() { }
 
-        public PodcastMetadata(string name, string description)
+        public PodcastMetadata(string id, string name, string description) : base(id)
         {
             Name = name;
             Description = description;

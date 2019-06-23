@@ -1,6 +1,7 @@
 using Autofac;
 using WristCast.Core.Data;
 using WristCast.Core.IoC;
+using WristCast.Core.Services;
 
 namespace WristCast
 {
@@ -11,6 +12,7 @@ namespace WristCast
             base.OnCreate();
             ElmSharp.Utility.AppendGlobalFontPath(this.DirectoryInfo.Resource);
             IocContainer.Initialize(new WristCastModule());
+            IocContainer.Instance.Resolve<ILog>().Info("App starting...");
             LoadApplication(new App());
         }
 

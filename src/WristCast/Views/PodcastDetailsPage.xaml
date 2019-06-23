@@ -15,9 +15,12 @@
     <ContentPage.Content>
         <forms:CircleScrollView>
             <StackLayout>
-                <Label Text="{Binding Podcast.Name}" FontSize="6"
+                <Label Text="{Binding Podcast.Name}"
+                       FontSize="6"
                        HorizontalOptions="CenterAndExpand" />
-                <forms:Check DisplayStyle="Small" IsToggled="{Binding Podcast.IsSubscribed}"/>
+                <forms:Check DisplayStyle="Small" 
+                             IsToggled="{Binding Podcast.IsSubscribed}" 
+                             Toggled="OnSwitchToggled"/>
                 <forms:CircleListView x:Name="ListView"
                                       ItemsSource="{Binding Podcast.Episodes}"
                                       ItemTapped="Cell_OnTapped" 

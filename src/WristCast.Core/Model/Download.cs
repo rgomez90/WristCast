@@ -11,10 +11,10 @@ namespace WristCast.Core.Model
     {
         private CancellationTokenSource _cts;
 
-        public Download( string source, string filePath)
+        public Download(PodcastEpisode podcastEpisode, string filePath)
         {
-            Id=new Guid();
-            Source = source;
+            Id = new Guid();
+            Source = podcastEpisode;
             FilePath = filePath;
             State = DownloadState.Pending;
             ErrorMessage = null;
@@ -22,7 +22,7 @@ namespace WristCast.Core.Model
         }
 
         public Guid Id { get; }
-        public string Source { get; }
+        public PodcastEpisode Source { get; }
         public string FilePath { get; }
         public DownloadState State { get; private set; }
         public string ErrorMessage { get; private set; }
@@ -39,11 +39,11 @@ namespace WristCast.Core.Model
 
         private void SetState(DownloadState state)
         {
-            if (state!=State)
+            if (state != State)
             {
                 var args = new DownloadStateChangedEventArgs(State, state);
                 State = state;
-                StateChanged?.Invoke(this,args);
+                StateChanged?.Invoke(this, args);
             }
         }
 
@@ -55,7 +55,7 @@ namespace WristCast.Core.Model
                 try
                 {
                     SetState(DownloadState.Downloading);
-                    await service.DownloadFileAsync(Source,FilePath, _cts.Token);
+                    await service.DownloadFileAsync(Source.Audio, FilePath, _cts.Token);
                     SetState(DownloadState.Completed);
                 }
                 catch (TaskCanceledException)
