@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using WristCast.Core;
+using WristCast.Core.Services;
 
 namespace WristCast
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WristCast.Core
+namespace WristCast.Core.Services
 {
     public interface ILog
     {

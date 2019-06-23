@@ -1,4 +1,4 @@
-﻿namespace WristCast.Core.Services
+﻿namespace WristCast.Core.Model
 {
     public interface ISearchResult
     {

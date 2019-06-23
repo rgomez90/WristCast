@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using ListenNotesSearch.NET;
+using WristCast.Core.Extensions;
 using WristCast.Core.Model;
 using ApiSearchResults = ListenNotesSearch.NET.Models;
 

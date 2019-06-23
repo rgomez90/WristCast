@@ -1,4 +1,6 @@
-﻿namespace WristCast.Core.Services
+﻿using WristCast.Core.Shared;
+
+namespace WristCast.Core.Model
 {
     public class MediaType : SmartEnum<MediaType, int>
     {

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WristCast.Core", "WristCast
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListenNotesSearch.NET", "..\..\ListenNotesSearch.NET\src\ListenNotesSearch.NET\ListenNotesSearch.NET.csproj", "{51DEFD8E-FEEE-49AB-B503-9C79615D1FD4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WristCast.Core.Tests", "..\tests\WristCast.Core.Tests\WristCast.Core.Tests.csproj", "{C5E1B7E9-1F60-4779-B011-65CBA66ACE53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{51DEFD8E-FEEE-49AB-B503-9C79615D1FD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51DEFD8E-FEEE-49AB-B503-9C79615D1FD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51DEFD8E-FEEE-49AB-B503-9C79615D1FD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5E1B7E9-1F60-4779-B011-65CBA66ACE53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5E1B7E9-1F60-4779-B011-65CBA66ACE53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5E1B7E9-1F60-4779-B011-65CBA66ACE53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5E1B7E9-1F60-4779-B011-65CBA66ACE53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using WristCast.Core;
+using WristCast.Core.Services;
 using Xamarin.Forms;
 
 namespace WristCast.ViewModels
@@ -16,7 +17,7 @@ namespace WristCast.ViewModels
             ApiKey = string.Empty;
             SaveApiKey = new Command(async () =>
               {
-                  await _secretsService.SaveSecretAsync(Secrets.KeyAlias,ApiKey);
+                  await _secretsService.SaveSecretAsync(Secrets.KeyAlias,ApiKey.Trim());
                   IsApiKeySaved = true;
                   await _navigationService.PopModalAsync();
               });

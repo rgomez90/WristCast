@@ -8,6 +8,7 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:services="clr-namespace:WristCast.Core.Services;assembly=WristCast.Core"
                       xmlns:viewModels="clr-namespace:WristCast.ViewModels"
+                      xmlns:model="clr-namespace:WristCast.Core.Model;assembly=WristCast.Core"
                       mc:Ignorable="d"
                       d:DataContext="{d:DesignInstance viewModels:SearchViewModel}"
                       x:Class="WristCast.Views.SearchPage"
@@ -37,7 +38,7 @@
                            Text="Podcast"
                            VerticalOptions="Center" />
                     <circularUi:Radio GroupName="Type" Value="Podcast" Scale=".5"
-                                      IsSelected="{Binding SelectedMediaType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static services:MediaType.Podcast}}" />
+                                      IsSelected="{Binding SelectedMediaType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static model:MediaType.Podcast}}" />
                 </StackLayout>
                 <StackLayout Grid.Column="1" Orientation="Horizontal">
                     <Label
@@ -46,7 +47,7 @@
                         FontSize="6"
                         VerticalOptions="Center" />
                     <circularUi:Radio GroupName="Type" Value="Episode" Scale=".5"
-                                      IsSelected="{Binding SelectedMediaType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static services:MediaType.Episode}}" />
+                                      IsSelected="{Binding SelectedMediaType, Converter={StaticResource EnumToBoolConverter}, ConverterParameter={x:Static model:MediaType.Episode}}" />
                 </StackLayout>
             </Grid>
         </StackLayout>

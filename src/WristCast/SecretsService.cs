@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tizen.Security.SecureRepository;
 using WristCast.Core;
+using WristCast.Core.Services;
 
 namespace WristCast
 {

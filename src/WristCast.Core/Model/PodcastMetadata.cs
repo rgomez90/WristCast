@@ -4,7 +4,15 @@ namespace WristCast.Core.Model
 {
     public class PodcastMetadata : Entity<string>
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public PodcastMetadata() { }
+
+        public PodcastMetadata(string name, string description)
+        {
+            Name = name;
+            Description = description;
+        }
+
+        public string Name { get; }
+        public string Description { get; }
     }
 }

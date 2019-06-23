@@ -1,4 +1,6 @@
-﻿namespace WristCast.Core.Services
+﻿using WristCast.Core.Model;
+
+namespace WristCast.Core.Extensions
 {
     public static class Extensions
     {

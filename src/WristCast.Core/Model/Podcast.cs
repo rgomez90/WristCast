@@ -8,18 +8,18 @@ namespace WristCast.Core.Model
     {
         public Podcast(PodcastFull podcast)
         {
-            Country=podcast.Country;
-            Description=podcast.Description;
-            Image=podcast.Image;
-            Website=podcast.Website;
+            Country = podcast.Country;
+            Description = podcast.Description;
+            Image = podcast.Image;
+            Website = podcast.Website;
             ExplicitContent = podcast.ExplicitContent;
-            RssFeed=podcast.Rss;
-            Publisher=podcast.Publisher;
+            RssFeed = podcast.Rss;
+            Publisher = podcast.Publisher;
             Name = podcast.Title;
             Episodes = podcast.Episodes.Select(x => new PodcastEpisode(x));
         }
 
-        public Podcast(PodcastSimple podcast,IEnumerable<PodcastEpisode> episodes)
+        public Podcast(PodcastSimple podcast, IEnumerable<PodcastEpisode> episodes)
         {
             Country = podcast.Country;
             Description = podcast.Description;
@@ -49,10 +49,15 @@ namespace WristCast.Core.Model
 
         public string Name { get; }
 
-        public string RssFeed{ get; }
+        public string RssFeed { get; }
 
         public IEnumerable<PodcastEpisode> Episodes { get; }
 
         public bool IsSubscribed { get; set; }
+
+        public PodcastMetadata GetMetadata()
+        {
+            return new PodcastMetadata(Name, Description);
+        }
     }
 }

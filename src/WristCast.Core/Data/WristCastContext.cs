@@ -25,9 +25,8 @@ namespace WristCast.Core.Data
 
         public AsyncTableQuery<PodcastEpisodeMetadata> PodcastEpisodeMetadata => database.Table<PodcastEpisodeMetadata>();
 
-        public static Task Create(string dbPath)
+        public Task Create()
         {
-            var database = new SQLiteAsyncConnection(dbPath);
             var tasks = new[]
             {
                 database.CreateTableAsync<PodcastEpisodeMetadata>(),

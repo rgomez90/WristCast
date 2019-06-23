@@ -45,7 +45,7 @@ namespace WristCast.ViewModels
                 _isFirstUse = Secrets.ApiKey == null;
                 if (_isFirstUse)
                 {
-                    await _navigationService.PushAsync<FirstUseViewModel>();
+                    await _navigationService.PushModalAsync<FirstUseViewModel>();
                 }
             }
             catch (Exception)

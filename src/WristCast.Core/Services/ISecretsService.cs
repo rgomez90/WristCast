@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace WristCast.Core
+namespace WristCast.Core.Services
 {
     public interface ISecretsService
     {

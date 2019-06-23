@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WristCast.Core;
+using WristCast.Core.Model;
 using WristCast.Core.Services;
 using Xamarin.Forms;
 

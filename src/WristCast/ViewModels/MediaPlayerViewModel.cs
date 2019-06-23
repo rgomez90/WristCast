@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Tizen.Multimedia;
 using WristCast.Core;
 using WristCast.Core.Model;
+using WristCast.Core.Services;
 using Xamarin.Forms;
 
 namespace WristCast.ViewModels
@@ -29,7 +30,7 @@ namespace WristCast.ViewModels
             PlayButtonImage = ImageSource.FromFile("play.png");
             StopButtonImage = ImageSource.FromFile("pause.png");
             ForwardButtonImage = ImageSource.FromFile("10_sec_forward.png");
-            MoveToCommand = new Command(MoveTo);
+            MoveToCommand = new Command(async () => await MoveTo());
             MoveToStartedCommand = new Command(MoveToStarted);
             AddEventHandlers();
         }
@@ -134,8 +135,9 @@ namespace WristCast.ViewModels
             await AudioPlayer.Current.ChangeSource(mediaSource);
         }
 
-        private void MoveTo()
+        private Task MoveTo()
         {
+            return AudioPlayer.Current.SeekTo(TimeSpan.FromSeconds(ActualSecond));
         }
 
         private void MoveToStarted()

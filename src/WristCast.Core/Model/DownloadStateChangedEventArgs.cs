@@ -1,4 +1,6 @@
-﻿namespace WristCast.Core.Services
+﻿using WristCast.Core.Services;
+
+namespace WristCast.Core.Model
 {
     public class DownloadStateChangedEventArgs
     {

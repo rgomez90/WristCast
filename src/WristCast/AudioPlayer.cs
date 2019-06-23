@@ -17,19 +17,27 @@ namespace WristCast
     {
         private static AudioPlayer _current;
 
-        private readonly Player _mediaPlayer;
+        private static readonly Player _mediaPlayer = new Player();
+        private static readonly AudioVolume _audioVolume = AudioManager.VolumeController;
+        private static readonly int _maxVolume = AudioManager.VolumeController.MaxLevel[AudioVolumeType.Media];
         private MediaSource _source;
         private readonly Timer _timer;
+        
 
         private AudioPlayer()
         {
-            _mediaPlayer = new Player();
+            _audioVolume.Changed += OnVolumeChanged;
             _timer = new Timer(1000) { AutoReset = true, Enabled = true };
             _mediaPlayer.PlaybackInterrupted += OnPlaybackInterrupted;
             _mediaPlayer.PlaybackCompleted += OnPlaybackCompleted;
             _mediaPlayer.ErrorOccurred += OnError;
             _mediaPlayer.BufferingProgressChanged += OnBufferingProgressChanged;
             SourceChanged += OnSourceChanged;
+        }
+
+        private void OnVolumeChanged(object sender, VolumeChangedEventArgs e)
+        {
+            VolumeChanged?.Invoke(this, Volume);
         }
 
         #region Events
@@ -54,6 +62,8 @@ namespace WristCast
         public event EventHandler SourceChanged;
 
         public event EventHandler Stopped;
+
+        public event EventHandler<int> VolumeChanged;
         #endregion
 
         #region Properties
@@ -68,6 +78,8 @@ namespace WristCast
             set => _mediaPlayer.IsLooping = value;
         }
 
+        public int MaxVolume => _maxVolume;
+
         public bool Muted
         {
             get => _mediaPlayer.Muted;
@@ -80,8 +92,8 @@ namespace WristCast
 
         public int Volume
         {
-            get => (int)(_mediaPlayer.Volume * 10);
-            set => _mediaPlayer.Volume = value / 10f;
+            get => _audioVolume.Level[AudioVolumeType.Media];
+            set => _audioVolume.Level[AudioVolumeType.Media] = value;
         }
 
         public PlayerState State => _mediaPlayer.State;
@@ -119,23 +131,25 @@ namespace WristCast
             PlayStarted?.Invoke(this, EventArgs.Empty);
         }
 
-        public Task SeekTo(int seconds)
+        public async Task SeekTo(TimeSpan seconds)
         {
-            var actualPosition = _mediaPlayer.GetPlayPosition();
-            var targetPosition = actualPosition + seconds * 1000;
+            int targetPosition = (int)seconds.TotalMilliseconds;
             if (targetPosition < 0) targetPosition = 0;
             if (targetPosition > Duration.TotalMilliseconds) targetPosition = (int)Duration.TotalMilliseconds;
-            return _mediaPlayer.SetPlayPositionAsync(targetPosition, true);
+            await SetPlayPosition(TimeSpan.FromMilliseconds(targetPosition));
         }
 
         public Task SeekToStart()
         {
-            return _mediaPlayer.SetPlayPositionAsync(0, false);
+            return SetPlayPosition(TimeSpan.Zero);
         }
 
-        public Task SetPlayPosition(TimeSpan position)
+        public async Task SetPlayPosition(TimeSpan position)
         {
-            return _mediaPlayer.SetPlayPositionAsync(position.Milliseconds, true);
+            if (_mediaPlayer.State == PlayerState.Idle || _mediaPlayer.State == PlayerState.Preparing) return;
+            _timer.Stop();
+            await _mediaPlayer.SetPlayPositionAsync((int)position.TotalMilliseconds, true);
+            _timer.Start();
         }
 
         public void Stop()

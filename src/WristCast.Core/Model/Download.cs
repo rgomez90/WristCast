@@ -3,8 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using WristCast.Core.IoC;
+using WristCast.Core.Services;
 
-namespace WristCast.Core.Services
+namespace WristCast.Core.Model
 {
     public class Download
     {

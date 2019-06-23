@@ -1,4 +1,5 @@
 using Autofac;
+using WristCast.Core.Data;
 using WristCast.Core.IoC;
 
 namespace WristCast
@@ -28,6 +29,10 @@ namespace WristCast
         {
             builder.RegisterAssemblyTypes(ThisAssembly)
                 .AsImplementedInterfaces().AsSelf();
+            builder.Register((c, p) =>
+                    new WristCastContext(App.GetDatabasePath()))
+                .As<WristCastContext>()
+                .SingleInstance();
         }
     }
 }

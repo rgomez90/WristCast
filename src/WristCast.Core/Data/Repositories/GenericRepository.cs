@@ -21,5 +21,20 @@ namespace WristCast.Core.Data.Repositories
         {
             return await _context.Table<T>().ToListAsync().ConfigureAwait(false);
         }
+
+        public Task Add(T entity)
+        {
+            return _context.Database.InsertAsync(entity);
+        }
+
+        public Task AddRange(IEnumerable<T> entities)
+        {
+            return _context.Database.InsertAllAsync(entities, typeof(T));
+        }
+
+        public Task Remove(T entity)
+        {
+            return _context.Database.DeleteAsync(entity);
+        }
     }
 }
