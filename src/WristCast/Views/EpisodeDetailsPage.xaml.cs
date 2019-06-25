@@ -1,4 +1,5 @@
-﻿using WristCast.ViewModels;
+﻿using WristCast.Core;
+using WristCast.ViewModels;
 using Xamarin.Forms.Xaml;
 
 namespace WristCast.Views

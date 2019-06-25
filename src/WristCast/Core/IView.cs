@@ -1,6 +1,6 @@
 ﻿using WristCast.ViewModels;
 
-namespace WristCast
+namespace WristCast.Core
 {
     public interface IView<out T> where T:ViewModel
     {

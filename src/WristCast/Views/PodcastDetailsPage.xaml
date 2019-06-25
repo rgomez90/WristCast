@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<wristCast:CircleView x:TypeArguments="viewModels:PodcastDetailsViewModel"
+<core:CircleView x:TypeArguments="viewModels:PodcastDetailsViewModel"
                       xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
@@ -7,6 +7,7 @@
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
                       xmlns:viewModels="clr-namespace:WristCast.ViewModels"
+                      xmlns:core="clr-namespace:WristCast.Core;assembly=WristCast"
                       mc:Ignorable="d"
                       d:DataContext="{d:DesignInstance viewModels:PodcastDetailsViewModel}"
                       x:Class="WristCast.Views.PodcastDetailsPage"
@@ -18,9 +19,10 @@
                 <Label Text="{Binding Podcast.Name}"
                        FontSize="6"
                        HorizontalOptions="CenterAndExpand" />
-                <forms:Check DisplayStyle="Small" 
-                             IsToggled="{Binding Podcast.IsSubscribed}" 
-                             Toggled="OnSwitchToggled"/>
+                <forms:Check  DisplayStyle="Small" 
+                              HorizontalOptions="Center"
+                              IsToggled="{Binding Podcast.IsSubscribed}" 
+                              Toggled="OnSwitchToggled"/>
                 <forms:CircleListView x:Name="ListView"
                                       ItemsSource="{Binding Podcast.Episodes}"
                                       ItemTapped="Cell_OnTapped" 
@@ -61,4 +63,4 @@
             </StackLayout>
         </forms:CircleScrollView>
     </ContentPage.Content>
-</wristCast:CircleView>
+</core:CircleView>

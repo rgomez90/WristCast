@@ -2,7 +2,7 @@
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace WristCast
+namespace WristCast.Converters
 {
     public class EnumToBoolConverter:IValueConverter
     {

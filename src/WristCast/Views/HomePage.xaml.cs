@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Tizen.Network.Connection;
 using Tizen.System;
+using WristCast.Core;
 using WristCast.Core.Model;
 using WristCast.Core.Services;
 using WristCast.ViewModels;

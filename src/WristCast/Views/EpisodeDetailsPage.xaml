@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<wristCast:CircleView x:TypeArguments="viewModels:EpisodeDetailsViewModel"
+<core:CircleView x:TypeArguments="viewModels:EpisodeDetailsViewModel"
                       xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
@@ -8,6 +8,7 @@
                       xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
                       xmlns:viewModels="clr-namespace:WristCast.ViewModels"
                       xmlns:fontAwesome="clr-namespace:WristCast.Utils"
+                      xmlns:core="clr-namespace:WristCast.Core;assembly=WristCast"
                       mc:Ignorable="d"
                       d:DataContext="{d:DesignInstance viewModels:EpisodeDetailsViewModel}"
                       x:Class="WristCast.Views.EpisodeDetailsPage"
@@ -15,9 +16,8 @@
                       NavigationPage.HasNavigationBar="False">
     <forms:CirclePage.Content>
         <forms:CircleScrollView x:Name="Sv">
-            <forms:CircleStackLayout HorizontalOptions="FillAndExpand"
-                                     Orientation="Vertical"
-                                     VerticalOptions="FillAndExpand">
+            <StackLayout HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand">
                 <Label Text="{Binding PodcastEpisode.Title}"
                        FontSize="5"
                        HorizontalOptions="CenterAndExpand" />
@@ -47,7 +47,7 @@
                             Command="{Binding PlayEpisode}"
                             CommandParameter="{Binding PodcastEpisode}" />
                 </Grid>
-            </forms:CircleStackLayout>
+            </StackLayout>
         </forms:CircleScrollView>
     </forms:CirclePage.Content>
-</wristCast:CircleView>
+</core:CircleView>

@@ -6,6 +6,8 @@
 
         string AppDataDirectory { get; }
 
+        string SharedAppDataDirectory { get; }
+
         string DatabasePath { get; }
     }
 }

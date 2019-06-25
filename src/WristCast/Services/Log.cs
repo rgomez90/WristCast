@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using WristCast.Core;
 using WristCast.Core.Services;
 
-namespace WristCast
+namespace WristCast.Services
 {
     public class Log : ILog
     {
@@ -17,13 +16,13 @@ namespace WristCast
         {
             global::Tizen.Log.Info(Logtag, message, file, func, line);
         }
-        public void Error(string message,Exception exception, [CallerFilePath]string file = "", [CallerMemberName] string func = "", [CallerLineNumber]int line = 0)
+        public void Error(string message, Exception exception, [CallerFilePath]string file = "", [CallerMemberName] string func = "", [CallerLineNumber]int line = 0)
         {
-            global::Tizen.Log.Error(Logtag, message + "\n" + exception.Message, file, func, line);
+            global::Tizen.Log.Error(Logtag, message + "\n" + exception.GetType() + "\n" + exception.Message, file, func, line);
         }
         public void Fatal(string message, Exception exception, [CallerFilePath]string file = "", [CallerMemberName] string func = "", [CallerLineNumber]int line = 0)
         {
-            global::Tizen.Log.Fatal(Logtag, message + "\n" + exception.Message, file, func, line);
+            global::Tizen.Log.Fatal(Logtag, message + "\n" + exception.GetType() + "\n" + exception.Message, file, func, line);
         }
         public void Warn(string message, [CallerFilePath]string file = "", [CallerMemberName] string func = "", [CallerLineNumber]int line = 0)
         {

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using WristCast.Core;
 using WristCast.Core.Data.Repositories;
 using WristCast.Core.Model;
@@ -23,29 +24,35 @@ namespace WristCast.ViewModels
             _podcastMetadaRepository = podcastMetadaRepository;
             RefreshCommand = new Command(Refresh);
             LoadEpisodesCommand = new Command(LoadEpisodes);
-            SubscribeToPodcastCommand = new Command(SubscribeToPodcast);
-            UnSubscribeToPodcastCommand = new Command(UnSubscribeToPodcast);
+            SubscribeToPodcastCommand = new Command(async () => await SubscribeToPodcast());
+            UnSubscribeToPodcastCommand = new Command(async () => await UnSubscribeToPodcast());
         }
 
-        private void UnSubscribeToPodcast(object obj)
+        private Task UnSubscribeToPodcast()
         {
-            _podcastMetadaRepository.Remove(Podcast.GetMetadata());
+            return PodcastManager.Current.UnsubscribeToPodcast(Podcast);
         }
 
         public ICommand UnSubscribeToPodcastCommand { get; set; }
 
-        private void SubscribeToPodcast()
+        private Task SubscribeToPodcast()
         {
-            _podcastMetadaRepository.Add(Podcast.GetMetadata());
+            return PodcastManager.Current.SubscribeToPodcast(Podcast);
         }
 
         public ICommand LoadEpisodesCommand { get; set; }
 
         public ICommand SubscribeToPodcastCommand { get; set; }
 
-        public Podcast Podcast { get; private set; }
+        private Podcast _podcast;
 
-        public ICommand RefreshCommand{get; }
+        public Podcast Podcast
+        {
+            get => _podcast;
+            private set => SetProperty(ref _podcast, value);
+        }
+
+        public ICommand RefreshCommand { get; }
 
         public override void Prepare(Podcast parameter)
         {

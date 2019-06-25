@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
+using WristCast.Core;
 using WristCast.Core.IoC;
 using Xamarin.Forms;
 

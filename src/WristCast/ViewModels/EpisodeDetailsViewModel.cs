@@ -12,13 +12,11 @@ namespace WristCast.ViewModels
     {
         private readonly DownloadManager _downloadService;
         private readonly INavigationService _navigationService;
-        private readonly IStorageProvider _storageProvider;
 
-        public EpisodeDetailsViewModel(INavigationService navigationService, DownloadManager downloadService, IStorageProvider storageProvider)
+        public EpisodeDetailsViewModel(INavigationService navigationService, DownloadManager downloadService)
         {
             _navigationService = navigationService;
             _downloadService = downloadService;
-            _storageProvider = storageProvider;
             DownloadEpisodeCommand = new Command<PodcastEpisode>(DownloadEpisode);
             PlayEpisode = new Command(async () => await PlayAudio());
         }
@@ -29,16 +27,29 @@ namespace WristCast.ViewModels
 
         public ICommand DownloadEpisodeCommand { get; }
 
-        public bool IsDownloaded { get; private set; }
+        private bool _isDownloaded;
+
+        public bool IsDownloaded
+        {
+            get => _isDownloaded;
+            private set => SetProperty(ref _isDownloaded,value,
+                nameof(IsDownloaded), nameof(CanDownload),nameof(DownloadColor));
+        }
 
         public ICommand PlayEpisode { get; }
 
-        public PodcastEpisode PodcastEpisode { get; private set; }
+        private PodcastEpisode _podcastEpisode;
+
+        public PodcastEpisode PodcastEpisode
+        {
+            get => _podcastEpisode;
+            private set => SetProperty(ref _podcastEpisode,value);
+        }
 
         public void DownloadEpisode(PodcastEpisode episode)
         {
             IsDownloaded = false;
-            var filePath = Path.Combine(_storageProvider.MediaFolderPath, $"{episode.Id}.mp3");
+            var filePath = Path.Combine(StorageProvider.Current.MediaFolderPath, $"{episode.Id}.mp3");
             var download = new Download(episode, filePath);
             _downloadService.AddDownload(download);
             download.StateChanged += OnDownloadStateChanged;
@@ -47,7 +58,7 @@ namespace WristCast.ViewModels
         public override void Prepare(PodcastEpisode parameter)
         {
             PodcastEpisode = parameter;
-            IsDownloaded = File.Exists(Path.Combine(_storageProvider.MediaFolderPath, parameter.Id + ".mp3"));
+            IsDownloaded = File.Exists(Path.Combine(StorageProvider.Current.MediaFolderPath, parameter.Id + ".mp3"));
         }
 
         private void OnDownloadStateChanged(object sender, DownloadStateChangedEventArgs e)

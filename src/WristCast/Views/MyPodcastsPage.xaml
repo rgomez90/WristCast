@@ -1,18 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<wristCast:CircleView x:TypeArguments="viewModels:MyPodcastViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:WristCast.ViewModels"
-             mc:Ignorable="d"
-             d:DataContext="{d:DesignInstance viewModels:MyPodcastViewModel}"
-             x:Class="WristCast.Views.MyPodcastsPage">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<core:CircleView x:TypeArguments="viewModels:MyPodcastViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:viewModels="clr-namespace:WristCast.ViewModels"
+                 xmlns:core="clr-namespace:WristCast.Core;assembly=WristCast"
+                 xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+                 mc:Ignorable="d"
+                 d:DataContext="{d:DesignInstance viewModels:MyPodcastViewModel}"
+                 x:Class="WristCast.Views.MyPodcastsPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <forms:CircleListView ItemsSource="{Binding PodcastMetadas}" ItemTapped="OnListItemTapped">
+                <forms:CircleListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout HeightRequest="100"
+                                         HorizontalOptions="FillAndExpand"
+                                         VerticalOptions="FillAndExpand">
+                                <Label Text="{Binding Name}"
+                                       HorizontalOptions="Center" />
+                                <Label Text="{Binding Publisher}"
+                                       FontSize="5"
+                                       HorizontalOptions="Center" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </forms:CircleListView.ItemTemplate>
+            </forms:CircleListView>
         </StackLayout>
     </ContentPage.Content>
-</wristCast:CircleView>
+</core:CircleView>

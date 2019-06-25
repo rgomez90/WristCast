@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<core:CircleView x:TypeArguments="viewModels:DownloadsViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:core="clr-namespace:WristCast.Core;assembly=WristCast"
+             xmlns:viewModels="clr-namespace:WristCast.ViewModels;assembly=WristCast"
+             xmlns:forms="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:DownloadsViewModel}"
+             x:Class="WristCast.Views.DownloadsPage"
+             RotaryFocusObject="{x:Reference ListView}">
+    <ContentPage.Content>
+        <Grid >
+            <Label IsVisible="{Binding AreDownloadsEmpty}" Text="No dowloads"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="CenterAndExpand"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"/>
+            <forms:CircleListView x:Name="ListView" 
+                              ItemsSource="{Binding DownloadedEpisodes}" 
+                              ItemTapped="OnListItemTapped"
+                              IsVisible="{Binding AreDownloadsEmpty}">
+                <forms:CircleListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout HeightRequest="100"
+                                         HorizontalOptions="FillAndExpand"
+                                         VerticalOptions="FillAndExpand">
+                                <Label HorizontalOptions="Center"
+                                       Text="{Binding Title}"/>
+                                <Label HorizontalOptions="Center"
+                                    Text="{Binding Date, StringFormat=d}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </forms:CircleListView.ItemTemplate>
+            </forms:CircleListView>
+        </Grid>
+    </ContentPage.Content>
+</core:CircleView>

@@ -35,33 +35,28 @@ namespace WristCast.Core.Services
         private void Download_StateChanged(object sender, DownloadStateChangedEventArgs e)
         {
             Download download = sender as Download ?? throw new ArgumentException(nameof(sender));
-            if (e.OldState == DownloadState.Downloading)
-            {
-                ExecutePendingDownload();
-            }
             _log.Info($"Download {download.Id} state changed from {e.OldState} to {e.NewState}");
             switch (e.NewState)
             {
                 case DownloadState.Pending:
-                    _log.Info($"Download {download.Id} started");
+                    _log.Info($"Download {download.Id} pending");
                     break;
                 case DownloadState.Cancelled:
-                    _log.Info($"Download {download.Id} started");
+                    _log.Info($"Download {download.Id} cancelled");
                     break;
                 case DownloadState.Downloading:
-                    _log.Info($"Download {download.Id} started");
+                    _log.Info($"Download {download.Id} downloading");
                     break;
                 case DownloadState.Completed:
                     DownloadCompleted?.Invoke(this, download);
                     _log.Info($"Download {download.Id} completed");
                     break;
                 case DownloadState.Error:
-                    _log.Info($"Download {download.Id} started");
+                    _log.Info($"Download {download.Id} failed");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
         }
 
         public event EventHandler<Download> DownloadCompleted;
@@ -88,6 +83,8 @@ namespace WristCast.Core.Services
         {
             await PodcastManager.Current.AddDownloadedEpisode(e.Source.GetMetadata());
             DownloadCompleted?.Invoke(this, e);
+            ExecutePendingDownload();
         }
+
     }
 }

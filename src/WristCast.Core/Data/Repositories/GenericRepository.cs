@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace WristCast.Core.Data.Repositories
 {
-    public abstract class GenericRepository<T, TKey> : IGenericRepository<T, TKey> where T : Entity<TKey>, new()
+    public abstract class GenericRepository<T, TKey> : IGenericRepository<T, TKey> where T : IEntity<TKey>, new()
     {
         private readonly WristCastContext _context;
 

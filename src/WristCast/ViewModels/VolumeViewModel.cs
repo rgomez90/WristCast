@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using WristCast.Services;
 using Xamarin.Forms;
 
 namespace WristCast.ViewModels
@@ -15,25 +16,27 @@ namespace WristCast.ViewModels
             IsMuted = !IsMuted;
         }
 
-        public string VolumeIcon
-        {
-            get
-            {
-                if (IsMuted) return Utils.FontAwesomeIcons.VolumeMute;
-                return Utils.FontAwesomeIcons.VolumeUp;
-            }
-        }
+        public string VolumeIcon => IsMuted ? Utils.FontAwesomeIcons.VolumeMute : Utils.FontAwesomeIcons.VolumeUp;
 
         public bool IsMuted
         {
             get => AudioPlayer.Current.Muted;
-            set => AudioPlayer.Current.Muted = value;
+            set
+            {
+                AudioPlayer.Current.Muted = value; 
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(VolumeIcon));
+            }
         }
 
         public int Volume
         {
             get => AudioPlayer.Current.Volume;
-            set => AudioPlayer.Current.Volume = value;
+            set
+            {
+                AudioPlayer.Current.Volume = value; 
+                OnPropertyChanged();
+            }
         }
 
         public ICommand VolumeCommand { get; set; }

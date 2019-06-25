@@ -1,15 +1,13 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Tizen.Wearable.CircularUI.Forms;
+using WristCast.Core.Shared;
 using Xamarin.Forms;
 
 namespace WristCast.ViewModels
 {
-    public abstract class ViewModel : INotifyPropertyChanged
+    public abstract class ViewModel : BindableBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public virtual Task Init() { return Task.CompletedTask; }
         public virtual Task Clean() { return Task.CompletedTask; }
@@ -43,7 +41,7 @@ namespace WristCast.ViewModels
 
             if (dismissOnBackButtonPressed)
             {
-                textPopUp.BackButtonPressed += (s, e) => textPopUp?.Dismiss();
+                textPopUp.BackButtonPressed += (s, e) => textPopUp.Dismiss();
             }
 
             if (backButtonAction != null)
@@ -54,10 +52,7 @@ namespace WristCast.ViewModels
             return textPopUp;
         }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+
 
         protected virtual void ShowToast(string text, FileImageSource iconMediaSource = null, int duration = 3)
         {

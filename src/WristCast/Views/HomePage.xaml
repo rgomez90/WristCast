@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<wristCast:CircleView x:TypeArguments="viewModels:HomeViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+<core:CircleView x:TypeArguments="viewModels:HomeViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:c="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
-             xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
-             xmlns:viewModels="clr-namespace:WristCast.ViewModels"
              xmlns:fontawesome="clr-namespace:WristCast.Utils;assembly=WristCast"
+             xmlns:core="clr-namespace:WristCast.Core;assembly=WristCast"
+             xmlns:viewModels="clr-namespace:WristCast.ViewModels;assembly=WristCast"
              x:Class="WristCast.Views.HomePage"
              NavigationPage.HasNavigationBar="False">
     <c:CirclePage.Content>
@@ -18,17 +18,18 @@
                         BorderColor="White"
                         BorderWidth="5"
                         BackgroundColor="Transparent"
-                        HorizontalOptions="Center"/>
+                        HorizontalOptions="Center"
+                        Command="{Binding MediaPlayerCommand}"/>
                 <Button Text="Search" 
                     HorizontalOptions="Center" 
-                    Command="{Binding Search}"/>
-                <Button Text="test" 
-                    HorizontalOptions="Center" 
-                    Command="{Binding Test}"/>
+                    Command="{Binding SearchCommand}"/>
                 <Button Text="My Podcasts" 
                     HorizontalOptions="Center" 
-                    Command="{Binding MyPodcasts}"/>
+                    Command="{Binding MyPodcastsCommand}"/>
+                <Button Text="My Downloads" 
+                        HorizontalOptions="Center" 
+                        Command="{Binding MyDownloadsCommand}"/>
             </StackLayout>
         </c:CircleScrollView>
     </c:CirclePage.Content>
-</wristCast:CircleView>
+</core:CircleView>

@@ -1,11 +1,18 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using Autofac;
 using Tizen.Multimedia;
+using WristCast.Core.IoC;
+using WristCast.Core.Services;
+using WristCast.Core.Shared;
+using WristCast.ViewModels;
+using Timer = System.Timers.Timer;
 
-namespace WristCast
+namespace WristCast.Services
 {
     public enum AudioPlayerSourceType
     {
@@ -13,7 +20,7 @@ namespace WristCast
         Stream
     }
 
-    public sealed class AudioPlayer : INotifyPropertyChanged
+    public sealed class AudioPlayer : BindableBase
     {
         private static AudioPlayer _current;
 
@@ -26,8 +33,10 @@ namespace WristCast
 
         private AudioPlayer()
         {
+            _log = IocContainer.Instance.Resolve<ILog>();
             _audioVolume.Changed += OnVolumeChanged;
             _timer = new Timer(1000) { AutoReset = true, Enabled = true };
+            _timer.Elapsed += OnTimerElapsed;
             _mediaPlayer.PlaybackInterrupted += OnPlaybackInterrupted;
             _mediaPlayer.PlaybackCompleted += OnPlaybackCompleted;
             _mediaPlayer.ErrorOccurred += OnError;
@@ -57,8 +66,6 @@ namespace WristCast
 
         public event EventHandler PlayStarted;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public event EventHandler SourceChanged;
 
         public event EventHandler Stopped;
@@ -70,12 +77,22 @@ namespace WristCast
 
         public static AudioPlayer Current => _current ?? (_current = new AudioPlayer());
 
-        public TimeSpan Duration { get; set; }
+        private TimeSpan _duration;
+
+        public TimeSpan Duration
+        {
+            get => _duration;
+            set => SetProperty(ref _duration, value);
+        }
 
         public bool IsLooping
         {
             get => _mediaPlayer.IsLooping;
-            set => _mediaPlayer.IsLooping = value;
+            set
+            {
+                _mediaPlayer.IsLooping = value;
+                OnPropertyChanged();
+            }
         }
 
         public int MaxVolume => _maxVolume;
@@ -83,17 +100,33 @@ namespace WristCast
         public bool Muted
         {
             get => _mediaPlayer.Muted;
-            set => _mediaPlayer.Muted = value;
+            set
+            {
+                _mediaPlayer.Muted = value; 
+                OnPropertyChanged();
+            }
         }
 
-        public TimeSpan Position { get; set; }
+        private TimeSpan _position;
+
+        private ILog _log;
+
+        public TimeSpan Position
+        {
+            get => _position;
+            set => SetProperty(ref _position,value);
+        }
 
         public AudioPlayerSourceType SourceType { get; private set; } = 0;
 
         public int Volume
         {
             get => _audioVolume.Level[AudioVolumeType.Media];
-            set => _audioVolume.Level[AudioVolumeType.Media] = value;
+            set
+            {
+                _audioVolume.Level[AudioVolumeType.Media] = value; 
+                OnPropertyChanged();
+            }
         }
 
         public PlayerState State => _mediaPlayer.State;
@@ -114,6 +147,8 @@ namespace WristCast
             SourceChanged?.Invoke(this, EventArgs.Empty);
             GetCurentPlayPosition();
             GetDuration();
+            SetProperty(ref _source,source,
+                nameof(Position),nameof(Duration),nameof(SourceType),nameof(this.State));
         }
 
         public void Pause()
@@ -125,7 +160,6 @@ namespace WristCast
 
         public void Play()
         {
-            _timer.Elapsed += OnTimerElapsed;
             _mediaPlayer.Start();
             _timer.Start();
             PlayStarted?.Invoke(this, EventArgs.Empty);
@@ -166,10 +200,6 @@ namespace WristCast
             GetCurentPlayPosition();
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         private void GetCurentPlayPosition()
         {
@@ -197,6 +227,7 @@ namespace WristCast
 
         private void OnError(object sender, PlayerErrorOccurredEventArgs e)
         {
+            Console.WriteLine(e.Error);
             ErrorOcurred?.Invoke(this, EventArgs.Empty);
         }
 
@@ -212,8 +243,6 @@ namespace WristCast
 
         private void OnSourceChanged(object sender, EventArgs e)
         {
-            GetCurentPlayPosition();
-            GetDuration();
             MetadataReady?.Invoke(this, EventArgs.Empty);
         }
 

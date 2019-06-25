@@ -16,6 +16,7 @@ namespace WristCast.Core.Model
             RssFeed = podcast.Rss;
             Publisher = podcast.Publisher;
             Name = podcast.Title;
+            Id = podcast.Id;
             Episodes = podcast.Episodes.Select(x => new PodcastEpisode(x));
         }
 
@@ -57,7 +58,7 @@ namespace WristCast.Core.Model
 
         public PodcastMetadata GetMetadata()
         {
-            return new PodcastMetadata(Id, Name, Description);
+            return new PodcastMetadata(Id, Name, Publisher, Description);
         }
     }
 }

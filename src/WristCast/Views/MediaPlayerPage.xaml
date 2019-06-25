@@ -1,4 +1,4 @@
-﻿<wristCast:CircleView x:TypeArguments="viewModels:MediaPlayerViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<core:CircleView x:TypeArguments="viewModels:MediaPlayerViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -6,6 +6,7 @@
                       xmlns:fontAwesome="clr-namespace:WristCast.Utils"
                       xmlns:viewModels="clr-namespace:WristCast.ViewModels"
                       xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
+                      xmlns:core="clr-namespace:WristCast.Core;assembly=WristCast"
                       mc:Ignorable="d"
                       d:DataContext="{d:DesignInstance viewModels:MediaPlayerViewModel}"
                       x:Class="WristCast.Views.MediaPlayerPage"
@@ -46,4 +47,4 @@
                     Command="{Binding NextCommand}" />
         </Grid>
     </StackLayout>
-</wristCast:CircleView>
+</core:CircleView>

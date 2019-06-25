@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
@@ -10,6 +11,7 @@ namespace WristCast.Core.Model
     public class Download
     {
         private CancellationTokenSource _cts;
+        private readonly Progress<long> _progress;
 
         public Download(PodcastEpisode podcastEpisode, string filePath)
         {
@@ -18,14 +20,34 @@ namespace WristCast.Core.Model
             FilePath = filePath;
             State = DownloadState.Pending;
             ErrorMessage = null;
+            _progress = new Progress<long>();
+            _progress.ProgressChanged += OnProgressChanged;
             _cts = new CancellationTokenSource();
         }
 
+        private void OnProgressChanged(object sender, long e)
+        {
+            Downloaded = e;
+            ProgressChanged?.Invoke(this, e);
+        }
+
+        public long? Size { get; private set; }
+
+        public long Downloaded { get; private set; }
+        
+        public double DownloadedPercentage => Size.HasValue || Size == 0 ? (Downloaded / Size.Value) * 100d : 0d;
+
         public Guid Id { get; }
+
         public PodcastEpisode Source { get; }
+
         public string FilePath { get; }
+
         public DownloadState State { get; private set; }
+
         public string ErrorMessage { get; private set; }
+
+        public event EventHandler<long> ProgressChanged;
 
         public void Cancel()
         {
@@ -36,6 +58,8 @@ namespace WristCast.Core.Model
         }
 
         public event EventHandler<DownloadStateChangedEventArgs> StateChanged;
+
+        public event EventHandler DownloadMetadataReady;
 
         private void SetState(DownloadState state)
         {
@@ -52,10 +76,11 @@ namespace WristCast.Core.Model
             using (var con = IocContainer.Instance.BeginLifetimeScope())
             {
                 var service = con.Resolve<IDownloadService>();
+                service.DownloadContentHeaderReady += OnDownloadContentHeaderReady;
                 try
                 {
                     SetState(DownloadState.Downloading);
-                    await service.DownloadFileAsync(Source.Audio, FilePath, _cts.Token);
+                    await service.DownloadFileAsync(Source.Audio, FilePath, _cts.Token, _progress);
                     SetState(DownloadState.Completed);
                 }
                 catch (TaskCanceledException)
@@ -73,6 +98,12 @@ namespace WristCast.Core.Model
                     _cts = new CancellationTokenSource();
                 }
             }
+        }
+
+        private void OnDownloadContentHeaderReady(object sender, HttpContentHeaders e)
+        {
+            Size = e.ContentLength;
+            DownloadMetadataReady?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<wristCast:CircleView x:TypeArguments="viewModels:SearchViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+<core:CircleView x:TypeArguments="viewModels:SearchViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
                       xmlns:circularUi="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
@@ -9,12 +9,14 @@
                       xmlns:services="clr-namespace:WristCast.Core.Services;assembly=WristCast.Core"
                       xmlns:viewModels="clr-namespace:WristCast.ViewModels"
                       xmlns:model="clr-namespace:WristCast.Core.Model;assembly=WristCast.Core"
+                      xmlns:core="clr-namespace:WristCast.Core;assembly=WristCast"
+                      xmlns:converters="clr-namespace:WristCast.Converters;assembly=WristCast"
                       mc:Ignorable="d"
                       d:DataContext="{d:DesignInstance viewModels:SearchViewModel}"
                       x:Class="WristCast.Views.SearchPage"
                       NavigationPage.HasNavigationBar="False">
     <circularUi:CirclePage.Resources>
-        <wristCast:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+        <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
     </circularUi:CirclePage.Resources>
     <circularUi:CirclePage.ActionButton>
         <circularUi:ActionButtonItem Text="Search"
@@ -52,4 +54,4 @@
             </Grid>
         </StackLayout>
     </circularUi:CirclePage.Content>
-</wristCast:CircleView>
+</core:CircleView>

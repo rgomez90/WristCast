@@ -24,33 +24,58 @@ namespace WristCast.ViewModels
             SearchCommand = new Command<string>(async searchText => await SearchAsync());
         }
 
-        public bool IsError { get; set; }
+        private bool _isError;
+
+        public bool IsError
+        {
+            get => _isError;
+            set => SetProperty(ref _isError,value);
+        }
 
         public bool IsSearchTextValid => SearchText.Length > 0;
 
         public Command<string> SearchCommand { get; }
 
-        public string SearchText { get; set; }
+        private string _searchText;
 
-        public MediaType SelectedMediaType { get; set; }
+        public string SearchText
+        {
+            get => _searchText;
+            set => SetProperty(ref _searchText,value,nameof(SearchText),nameof(IsSearchTextValid));
+        }
+
+        private MediaType _selectedMediaType;
+
+        public MediaType SelectedMediaType
+        {
+            get => _selectedMediaType;
+            set => SetProperty(ref _selectedMediaType,value);
+        }
 
         private async Task SearchAsync()
         {
             var popUp = CreateProgressPopup($"Searching for {SearchText}...");
+            IEnumerable<ISearchResult> searchResults = null;
             SearchText = SearchText.Trim();
             try
             {
                 popUp.Show();
                 _log.Info("Selected media type: " + SelectedMediaType.Name);
-                var podcasts = await _searchService.SearchAsync(SearchText, SelectedMediaType);
-                popUp.Dismiss();
-                await _navigation.PushAsync<SearchResultViewModel, IEnumerable<ISearchResult>>(podcasts);
+                searchResults = await _searchService.SearchAsync(SearchText, SelectedMediaType);
             }
             catch (Exception e)
             {
+                popUp.Dismiss();
+                popUp = CreateTextPopup("Error searching...");
+                popUp.Show();
                 IsError = true;
-                _log.Error($"Error searching for {SearchText}",e);
+                _log.Error($"Error searching for {SearchText}", e);
             }
+            finally
+            {
+                popUp.Dismiss();
+            }
+            await _navigation.PushAsync<SearchResultViewModel, IEnumerable<ISearchResult>>(searchResults);
         }
     }
 }

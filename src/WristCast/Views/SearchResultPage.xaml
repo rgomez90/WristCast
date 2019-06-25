@@ -1,16 +1,17 @@
-﻿<wristCast:CircleView x:TypeArguments="viewModels:SearchResultViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<core:CircleView x:TypeArguments="viewModels:SearchResultViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                       xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
                       xmlns:circularUi="clr-namespace:Tizen.Wearable.CircularUI.Forms;assembly=Tizen.Wearable.CircularUI.Forms"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                       xmlns:viewModels="clr-namespace:WristCast.ViewModels"
+                      xmlns:core="clr-namespace:WristCast.Core;assembly=WristCast"
                       mc:Ignorable="d"
                       d:DataContext="{d:DesignInstance viewModels:SearchResultViewModel}"
                       x:Class="WristCast.Views.SearchResultPage"
                       NavigationPage.HasNavigationBar="False"
                       RotaryFocusObject="{x:Reference List}">
-    <wristCast:CircleView.Content>
+    <circularUi:CirclePage.Content>
         <circularUi:CircleListView x:Name="List" ItemsSource="{Binding SearchResults}"
                               IsVisible="{Binding Loaded}"
                               ItemTapped="OnListItemTapped">
@@ -22,17 +23,17 @@
                                      Orientation="Horizontal"
                                      VerticalOptions="FillAndExpand">
                             <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
-                                <Label FontSize="5"
+                                <Label FontSize="7"
                                        HorizontalTextAlignment="Center"
                                        Text="{Binding TitleOriginal}" />
-                                <Label FontSize="4"
+                                <Label FontSize="5"
                                        HorizontalTextAlignment="Center"
-                                       Text="{Binding DescriptionOriginal}" />
+                                       Text="{Binding PublisherOriginal}" />
                             </StackLayout>
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>
             </circularUi:CircleListView.ItemTemplate>
         </circularUi:CircleListView>
-    </wristCast:CircleView.Content>
-</wristCast:CircleView>
+    </circularUi:CirclePage.Content>
+</core:CircleView>

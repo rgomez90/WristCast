@@ -3,7 +3,7 @@ using Tizen.Wearable.CircularUI.Forms;
 using WristCast.Core.IoC;
 using WristCast.ViewModels;
 
-namespace WristCast
+namespace WristCast.Core
 {
     public abstract class CircleView<T> : CirclePage, IView<T> where T : ViewModel
     {

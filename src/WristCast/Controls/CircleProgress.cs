@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace WristCast
+namespace WristCast.Controls
 {
     /// <summary>
     /// ProgressOptions types

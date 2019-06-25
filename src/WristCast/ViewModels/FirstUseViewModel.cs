@@ -25,11 +25,23 @@ namespace WristCast.ViewModels
 
         public bool IsApiKeyValid => !(string.IsNullOrEmpty(ApiKey) || string.IsNullOrWhiteSpace(ApiKey));
 
-        public bool IsApiKeySaved { get; set; }
+        private bool _isApiKeySaved;
+
+        public bool IsApiKeySaved
+        {
+            get => _isApiKeySaved;
+            set => SetProperty(ref _isApiKeySaved,value);
+        }
 
         public string TutorialText => "Your key is: " + ApiKey;
 
-        public string ApiKey { get; set; }
+        private string _apiKey;
+
+        public string ApiKey
+        {
+            get => _apiKey;
+            set => SetProperty(ref _apiKey, value, nameof(ApiKey), nameof(IsApiKeyValid));
+        }
 
         public ICommand SaveApiKey { get; }
     }

@@ -11,15 +11,16 @@
     <privileges>
         <privilege>http://tizen.org/privilege/bluetooth</privilege>
         <privilege>http://tizen.org/privilege/download</privilege>
-        <privilege>http://tizen.org/privilege/externalstorage</privilege>
-        <privilege>http://tizen.org/privilege/externalstorage.appdata</privilege>
         <privilege>http://tizen.org/privilege/internet</privilege>
         <privilege>http://tizen.org/privilege/mediastorage</privilege>
         <privilege>http://tizen.org/privilege/network.get</privilege>
         <privilege>http://tizen.org/privilege/network.profile</privilege>
         <privilege>http://tizen.org/privilege/network.set</privilege>
         <privilege>http://tizen.org/privilege/volume.set</privilege>
-        <privilege>http://tizen.org/privilege/display</privilege>
+        <privilege>http://tizen.org/privilege/systemsettings</privilege>
+        <privilege>http://tizen.org/privilege/appdir.shareddata</privilege>
+        <privilege>http://tizen.org/privilege/externalstorage</privilege>
+        <privilege>http://tizen.org/privilege/externalstorage.appdata</privilege>
     </privileges>
     <provides-appdefined-privileges />
 </manifest>

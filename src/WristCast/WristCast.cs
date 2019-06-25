@@ -1,5 +1,4 @@
 using Autofac;
-using WristCast.Core.Data;
 using WristCast.Core.IoC;
 using WristCast.Core.Services;
 
@@ -22,19 +21,6 @@ namespace WristCast
             global::Xamarin.Forms.Platform.Tizen.Forms.Init(app);
             global::Tizen.Wearable.CircularUI.Forms.Renderer.FormsCircularUI.Init();
             app.Run(args);
-        }
-    }
-
-    internal class WristCastModule : Module
-    {
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder.RegisterAssemblyTypes(ThisAssembly)
-                .AsImplementedInterfaces().AsSelf();
-            builder.Register((c, p) =>
-                    new WristCastContext(App.GetDatabasePath()))
-                .As<WristCastContext>()
-                .SingleInstance();
         }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using ElmSharp;
-using WristCast;
+using WristCast.Controls;
 using Xamarin.Forms.Platform.Tizen;
 
 [assembly: ExportRenderer(typeof(CircleProgress), typeof(CircleProgressRenderer))]
-namespace WristCast
+namespace WristCast.Controls
 {
     public class CircleProgressRenderer : ViewRenderer<CircleProgress, ProgressBar>
     {

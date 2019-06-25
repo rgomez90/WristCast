@@ -21,9 +21,21 @@ namespace WristCast.ViewModels
             _log = log;
         }
 
-        public ObservableCollection<ISearchResult> SearchResults { get; set; } = new ObservableCollection<ISearchResult>();
+        private ObservableCollection<ISearchResult> _searchResults = new ObservableCollection<ISearchResult>();
 
-        public bool Loaded { get; set; } = false;
+        public ObservableCollection<ISearchResult> SearchResults
+        {
+            get => _searchResults;
+            set => SetProperty(ref _searchResults,value);
+        }
+
+        private bool _loaded;
+
+        public bool Loaded
+        {
+            get => _loaded;
+            set => SetProperty(ref _loaded,value);
+        }
 
         public override void Prepare(IEnumerable<ISearchResult> parameter)
         {

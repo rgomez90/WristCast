@@ -17,28 +17,27 @@ namespace WristCast.ViewModels
         public HomeViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-            Search = new Command(async () => await _navigationService.PushAsync<SearchViewModel>());
-            MyPodcasts = new Command(async () => await _navigationService.PushAsync<MyPodcastViewModel>());
-            Test = new Command(async () => await TestMeth());
+            SearchCommand = new Command(async () => await _navigationService.PushAsync<SearchViewModel>());
+            MyPodcastsCommand = new Command(async () => await _navigationService.PushAsync<MyPodcastViewModel>());
+            MyDownloadsCommand = new Command(async () => await _navigationService.PushAsync<DownloadsViewModel>());
+            MediaPlayerCommand = new Command(async () => await _navigationService.PushAsync<MediaPlayerViewModel>());
         }
 
-        private async Task TestMeth()
+        private string _apiKey;
+
+        public string ApiKey
         {
-            using (var con = IocContainer.Instance.BeginLifetimeScope())
-            {
-                var s = con.Resolve<ISearchService>();
-                var ep = await s.SearchEpisodeAsync("727ff294ace34c1884ce01d1ad2ad279");
-                await _navigationService.PushAsync<MediaPlayerViewModel, PodcastEpisode>(ep);
-            }
+            get => _apiKey;
+            private set =>SetProperty(ref _apiKey, value);
         }
 
-        public string ApiKey { get; private set; }
+        public Command SearchCommand { get; }
 
-        public Command Search { get; }
+        public Command MyPodcastsCommand { get; }
 
-        public Command Test { get; }
+        public Command MyDownloadsCommand { get; }
 
-        public Command MyPodcasts { get; }
+        public Command MediaPlayerCommand { get; }
 
         public override async Task Init()
         {

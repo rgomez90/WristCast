@@ -5,7 +5,7 @@ using System.Windows.Input;
 using Tizen.Multimedia;
 using WristCast.Core;
 using WristCast.Core.Model;
-using WristCast.Core.Services;
+using WristCast.Services;
 using Xamarin.Forms;
 
 namespace WristCast.ViewModels
@@ -13,12 +13,10 @@ namespace WristCast.ViewModels
     public class MediaPlayerViewModel : ViewModel<PodcastEpisode>
     {
         private readonly INavigationService _navigationService;
-        private readonly IStorageProvider _storageProvider;
         private PodcastEpisode _parameter;
 
-        public MediaPlayerViewModel(IStorageProvider storageProvider, INavigationService navigationService)
+        public MediaPlayerViewModel( INavigationService navigationService)
         {
-            _storageProvider = storageProvider;
             _navigationService = navigationService;
             PlayOrStopCommand = new Command(PlayOrStop);
             StopCommand = new Command(Stop);
@@ -43,9 +41,15 @@ namespace WristCast.ViewModels
 
         public ImageSource BackButtonImage { get; }
 
-        public ImageSource BgImage { get; set; }
+        private ImageSource _bgImage;
 
-        public ImageSource ForwardButtonImage { get; set; }
+        public ImageSource BgImage
+        {
+            get => _bgImage;
+            set => SetProperty(ref _bgImage, value);
+        }
+
+        public ImageSource ForwardButtonImage { get; }
 
         public ICommand MoveToCommand { get; }
 
@@ -53,15 +57,15 @@ namespace WristCast.ViewModels
 
         public ICommand NextCommand { get; set; }
 
-        public ImageSource PauseButtonImage { get; set; }
+        public ImageSource PauseButtonImage { get; }
 
-        public ImageSource PlayButtonImage { get; set; }
+        public ImageSource PlayButtonImage { get; }
 
         public ICommand PlayOrStopCommand { get; }
 
         public ICommand PreviousCommand { get; set; }
 
-        public ImageSource StopButtonImage { get; set; }
+        public ImageSource StopButtonImage { get; }
 
         public ICommand StopCommand { get; set; }
 
@@ -128,7 +132,7 @@ namespace WristCast.ViewModels
 
         private async Task ChangeSource(PodcastEpisode source)
         {
-            var file = Path.Combine(_storageProvider.MediaFolderPath, source.Id + ".mp3");
+            var file = Path.Combine(StorageProvider.Current.MediaFolderPath, source.Id + ".mp3");
             MediaSource mediaSource = source.IsDownloaded && File.Exists(file) ?
                 new MediaUriSource(file) :
                 new MediaUriSource(source.Audio);
@@ -166,6 +170,7 @@ namespace WristCast.ViewModels
         {
             BgImage = ImageSource.FromUri(new Uri(_parameter.Image));
             CurrentEpisode = _parameter;
+            OnPropertyChanged(nameof(CurrentEpisode));
             _parameter = null;
         }
 

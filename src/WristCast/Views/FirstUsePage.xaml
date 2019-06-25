@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<wristCast:CircleView x:TypeArguments="viewModels:FirstUseViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
+<core:CircleView x:TypeArguments="viewModels:FirstUseViewModel" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:wristCast="clr-namespace:WristCast;assembly=WristCast"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:WristCast.ViewModels"
+             xmlns:core="clr-namespace:WristCast.Core;assembly=WristCast"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModels:FirstUseViewModel}"
              x:Class="WristCast.Views.FirstUsePage">
@@ -17,4 +18,4 @@
             <Button Text="Save Key" IsEnabled="{Binding IsApiKeyValid}" Command="{Binding SaveApiKey}"/>
         </StackLayout>
     </ContentPage.Content>
-</wristCast:CircleView>
+</core:CircleView>

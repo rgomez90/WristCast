@@ -2,16 +2,8 @@
 
 namespace WristCast.Core.Data
 {
-    public abstract class Entity<T>
+    public interface  IEntity<T>
     {
-        protected Entity() { }
-
-        protected Entity(T id)
-        {
-            Id = id;
-        }
-
-        [PrimaryKey]
-        public T Id { get; protected set; }
+        T Id { get;}
     }
 }
